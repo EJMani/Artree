@@ -1,9 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, StyleSheet, Button, View } from 'react-native';
+import {NavigationContainer} from "@react-navigation/native";
 
 export default function CommerceScreen({ navigation }) {
   return (
     <View style={styles.container}>
+      <StatusBar
+          style="light" //this took me an hour to figure out :(
+          translucent={true}
+      />
       <Text>commerce screen bitches!</Text>
       <StatusBar style="auto" />
     </View>

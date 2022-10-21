@@ -2,6 +2,7 @@ import { useEffect, useCallback } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import {StatusBar} from "expo-status-bar";
 
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
@@ -11,6 +12,8 @@ export default function HomeScreen() {
   useEffect(() => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
+      await NavigationBar.setBackgroundColorAsync('#ffffff00')
+
     }
     prepare();
   }, []);
@@ -27,6 +30,10 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
+      <StatusBar
+          style="light" //this took me an hour to figure out :(
+          translucent={true}
+      />
       <Text style={{ fontFamily: "newake", fontSize: 30, color: "#1FCEC6" }}>
         shitty art
       </Text>

@@ -1,9 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { Text, StyleSheet, Button, View } from 'react-native';
+import {NavigationContainer} from "@react-navigation/native";
 
 export default function SearchScreen({ navigation }) {
   return (
     <View style={styles.container}>
+      <StatusBar
+          style="light" //this took me an hour to figure out :(
+          translucent={true}
+      />
       <Text>search screen bitches!</Text>
       <StatusBar style="auto" />
     </View>
