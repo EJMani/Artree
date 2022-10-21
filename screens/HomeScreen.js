@@ -5,7 +5,7 @@ import * as SplashScreen from "expo-splash-screen";
 
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
-    newake: require("C:UsersellisOneDriveDocumentsartreeassets\newake-demo-400.otf"),
+    newake: require("artree/assets/newake-demo-400.otf"),
   });
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <Text style={{ fontFamily: "newake", fontSize: 30, color: "#1FCEC6" }}>
-        artree
+        shitty art
       </Text>
     </View>
   );

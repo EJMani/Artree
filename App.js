@@ -1,28 +1,35 @@
 import * as React from 'react';
-import { useEffect, useCallback } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
-import ProfileScreen from './screens/NewPostScreen';
+import ProfileScreen from './screens/ProfileScreen';
 import SearchScreen from './screens/SearchScreen';
 import NewPostScreen from './screens/NewPostScreen';
 import CommerceScreen from './screens/CommerceScreen';
+import { StatusBar } from "expo-status-bar";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  return (
+    const [fontsLoaded] = useFonts({
+        newake: require("artree/assets/newake-demo-400.otf"),
+    });
+
+return (
     <NavigationContainer>
-      <Tab.Navigator
+        <StatusBar
+            style="light" //this took me an hour to figure out :(
+            translucent={true}
+        />
+        <Tab.Navigator
       screenOptions={({ route }) => ({
           tabBarStyle: {
             backgroundColor: "#090820",
             height: 55,
           },
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ color, size }) => {
             let iconName;
 
             if (route.name === 'Home') {
@@ -44,9 +51,20 @@ export default function App() {
           tabBarInactiveTintColor: '#fff',
         })}
         >
-        <Tab.Screen 
+        <Tab.Screen
         name="Home" 
         component={HomeScreen}
+        options={{
+            title: 'artree',
+            headerStyle: {
+                backgroundColor: '#090820',
+            },
+            headerTintColor: '#1FCEC6',
+            headerTitleStyle: {
+                fontSize: 25,
+                fontFamily: 'newake',
+            },
+        }}
         />
         <Tab.Screen 
         name="Search" 
