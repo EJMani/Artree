@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import logo from './artree_logo_transparent_longer_stem.png'
+import font from './artree_title.png'
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Image source={logo} style={{ width: 400, height: 400 }} />
+      <Image source={font} style={{ width: 400, height: 100 }} />
     </View>
   );
 }
@@ -13,7 +15,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1f1e49',
     alignItems: 'center',
     justifyContent: 'center',
   },
