@@ -1,10 +1,20 @@
-import { useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import {StatusBar} from "expo-status-bar";
 
 export default function HomeScreen() {
+  
+  //DB Connection setup
+  const [text, setText] = useState('shitty art')
+  function dbTest(){
+    fetch('http://52.90.135.140:3000/testdb')
+    .then(response => response.json())
+    .then(data => {setText(data[0].Address)});
+  }
+  dbTest();
+
   const [fontsLoaded] = useFonts({
     newake: require("artree/assets/newake-demo-400.otf"),
   });
@@ -35,7 +45,7 @@ export default function HomeScreen() {
           translucent={true}
       />
       <Text style={{ fontFamily: "newake", fontSize: 30, color: "#1FCEC6" }}>
-        shitty art
+        {text}
       </Text>
     </View>
   );
