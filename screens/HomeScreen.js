@@ -9,7 +9,7 @@ export default function HomeScreen() {
   //DB Connection setup
   const [text, setText] = useState('shitty art')
   function dbTest(){
-    fetch('http://52.90.135.140:3000/testdb')
+    fetch('http://54.236.91.239:3000/testdb')
     .then(response => response.json())
     .then(data => {setText(data[0].Address)});
   }
