@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useCallback } from "react";
 import {useFonts} from 'expo-font';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -19,18 +20,18 @@ export default function App() {
         'newake': require("artree/assets/newake-demo-400.otf"),
     });
 
-    // const onLayoutRootView = useCallback(async () => {
-    //     if (fontsLoaded) {
-    //         await SplashScreen.hideAsync();
-    //     }
-    // }, [fontsLoaded]);
-    //
-    // if (!fontsLoaded) {
-    //     return null;
-    // }
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded]);
+
+    if (!fontsLoaded) {
+        return null;
+    }
 
     return (
-        <NavigationContainer>
+        <NavigationContainer onLayout={onLayoutRootView}>
             <Tab.Navigator
                 screenOptions={({route}) => ({
                     tabBarShowLabel: false,
@@ -76,6 +77,7 @@ export default function App() {
                     component={HomeScreen}
                     options={{
                         headerTitle: 'artree',
+                        headerTitleAlign: 'left',
                     }}
                 />
                 <Tab.Screen
@@ -105,6 +107,7 @@ export default function App() {
                     component={ProfileScreen}
                     options={{
                         headerTitle: 'artree',
+                        headerTitleAlign: 'left',
                     }}
                 />
             </Tab.Navigator>

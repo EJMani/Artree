@@ -46,7 +46,6 @@ export default function HomeScreen() {
         <View style={styles.container} onLayout={onLayoutRootView}>
             <StatusBar
                 style="light" //this took me an hour to figure out :(
-                translucent={true}
             />
             <Text style={{fontFamily: "newake", fontSize: 30, color: "#1FCEC6"}}>
                 {text}

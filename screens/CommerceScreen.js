@@ -7,7 +7,6 @@ export default function CommerceScreen({navigation}) {
         <View style={styles.container}>
             <StatusBar
                 style="light" //this took me an hour to figure out :(
-                translucent={true}
             />
             <Text>commerce screen bitches!</Text>
             <StatusBar style="auto"/>

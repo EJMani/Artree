@@ -7,7 +7,6 @@ export default function ProfileScreen({navigation}) {
         <View style={styles.container}>
             <StatusBar
                 style="light" //this took me an hour to figure out :(
-                translucent={true}
             />
             <Text>profile screen bitches!</Text>
             <StatusBar style="auto"/>
