@@ -5,10 +5,10 @@ import {NavigationContainer} from "@react-navigation/native";
 export default function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <StatusBar
-          style="light" //this took me an hour to figure out :(
-          translucent={true}
-      />
+        <StatusBar
+            style="light" //this took me an hour to figure out :(
+            translucent={true}
+        />
       <Text>profile screen bitches!</Text>
       <StatusBar style="auto" />
     </View>
@@ -16,10 +16,10 @@ export default function ProfileScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        justifyContent: "space-around",
+        alignItems: "center",
+        backgroundColor: "#1f1e49",
+    },
 });

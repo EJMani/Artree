@@ -14,6 +14,10 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
 
+    const [fontsLoaded] = useFonts({
+        newake: require("artree/assets/newake-demo-400.otf"),
+    });
+
     return (
         <NavigationContainer>
             <StatusBar
@@ -22,6 +26,7 @@ export default function App() {
             />
             <Tab.Navigator
           screenOptions={({ route }) => ({
+              tabBarShowLabel: false,
               tabBarStyle: {
                 backgroundColor: "#090820",
                 height: 55,
@@ -52,7 +57,7 @@ export default function App() {
             name="Home"
             component={HomeScreen}
             options={{
-                title: 'artree',
+                headerTitle: 'artree',
                 headerStyle: {
                     backgroundColor: '#090820',
                 },
@@ -66,18 +71,61 @@ export default function App() {
             <Tab.Screen
             name="Search"
             component={SearchScreen}
+            options={{
+                headerStyle: {
+                    backgroundColor: '#090820',
+                },
+                headerTintColor: '#1FCEC6',
+                headerTitleStyle: {
+                    fontSize: 25,
+                    fontFamily: 'newake',
+                },
+            }}
             />
             <Tab.Screen
             name="NewPost"
             component={NewPostScreen}
+            options={{
+                headerTitle: 'New Post',
+                headerStyle: {
+                    backgroundColor: '#090820',
+                },
+                headerTintColor: '#1FCEC6',
+                headerTitleStyle: {
+                    fontSize: 25,
+                    fontFamily: 'newake',
+                },
+            }}
             />
             <Tab.Screen
             name="Commerce"
             component={CommerceScreen}
+            options={{
+                headerTitle: 'Buying',
+                headerStyle: {
+                    backgroundColor: '#090820',
+                },
+                headerTintColor: '#1FCEC6',
+                headerTitleStyle: {
+                    fontSize: 25,
+                    fontFamily: 'newake',
+                },
+            }}
             />
             <Tab.Screen
             name="Profile"
             component={ProfileScreen}
+            options={{
+                headerTitle: 'artree',
+                headerStyle: {
+                    backgroundColor: '#090820',
+                },
+                headerTintColor: '#1FCEC6',
+                headerTitleStyle: {
+                    fontSize: 25,
+                    fontFamily: 'newake',
+                },
+            }}
             />
           </Tab.Navigator>
         </NavigationContainer>
