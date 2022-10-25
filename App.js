@@ -9,14 +9,25 @@ import SearchScreen from './screens/SearchScreen';
 import NewPostScreen from './screens/NewPostScreen';
 import CommerceScreen from './screens/CommerceScreen';
 import {StatusBar} from "expo-status-bar";
+import * as SplashScreen from "expo-splash-screen";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
 
     const [fontsLoaded] = useFonts({
-        newake: require("artree/assets/newake-demo-400.otf"),
+        'newake': require("artree/assets/newake-demo-400.otf"),
     });
+
+    // const onLayoutRootView = useCallback(async () => {
+    //     if (fontsLoaded) {
+    //         await SplashScreen.hideAsync();
+    //     }
+    // }, [fontsLoaded]);
+    //
+    // if (!fontsLoaded) {
+    //     return null;
+    // }
 
     return (
         <NavigationContainer>
@@ -27,6 +38,16 @@ export default function App() {
                         backgroundColor: "#090820",
                         height: 55,
                         borderTopWidth: 0,
+                    },
+                    headerStyle: {
+                        shadowColor: 'transparent',
+                        backgroundColor: '#090820',
+                        borderBottomWidth: 0,
+                    },
+                    headerTintColor: '#1FCEC6',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'newake',
                     },
                     tabBarIcon: ({color, size}) => {
                         let iconName;
@@ -55,28 +76,12 @@ export default function App() {
                     component={HomeScreen}
                     options={{
                         headerTitle: 'artree',
-                        headerStyle: {
-                            backgroundColor: '#090820',
-                        },
-                        headerTintColor: '#1FCEC6',
-                        headerTitleStyle: {
-                            fontSize: 25,
-                            fontFamily: 'newake',
-                        },
                     }}
                 />
                 <Tab.Screen
                     name="Search"
                     component={SearchScreen}
                     options={{
-                        headerStyle: {
-                            backgroundColor: '#090820',
-                        },
-                        headerTintColor: '#1FCEC6',
-                        headerTitleStyle: {
-                            fontSize: 25,
-                            fontFamily: 'newake',
-                        },
                     }}
                 />
                 <Tab.Screen
@@ -85,14 +90,6 @@ export default function App() {
                     options={{
                         headerTitle: 'New Post',
                         headerTitleAlign: 'center',
-                        headerStyle: {
-                            backgroundColor: '#090820',
-                        },
-                        headerTintColor: '#1FCEC6',
-                        headerTitleStyle: {
-                            fontSize: 25,
-                            fontFamily: 'newake',
-                        },
                     }}
                 />
                 <Tab.Screen
@@ -101,14 +98,6 @@ export default function App() {
                     options={{
                         headerTitle: 'Buying',
                         headerTitleAlign: 'center',
-                        headerStyle: {
-                            backgroundColor: '#090820',
-                        },
-                        headerTintColor: '#1FCEC6',
-                        headerTitleStyle: {
-                            fontSize: 25,
-                            fontFamily: 'newake',
-                        },
                     }}
                 />
                 <Tab.Screen
@@ -116,14 +105,6 @@ export default function App() {
                     component={ProfileScreen}
                     options={{
                         headerTitle: 'artree',
-                        headerStyle: {
-                            backgroundColor: '#090820',
-                        },
-                        headerTintColor: '#1FCEC6',
-                        headerTitleStyle: {
-                            fontSize: 25,
-                            fontFamily: 'newake',
-                        },
                     }}
                 />
             </Tab.Navigator>

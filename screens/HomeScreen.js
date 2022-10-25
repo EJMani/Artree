@@ -20,14 +20,13 @@ export default function HomeScreen() {
     dbTest();
 
     const [fontsLoaded] = useFonts({
-        newake: require("artree/assets/newake-demo-400.otf"),
+        'newake': require("artree/assets/newake-demo-400.otf"),
     });
 
     useEffect(() => {
         async function prepare() {
             await SplashScreen.preventAutoHideAsync();
-            await NavigationBar.setBackgroundColorAsync('#ffffff00')
-
+            // await NavigationBar.setBackgroundColorAsync('#ffffff00');
         }
 
         prepare();
