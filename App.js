@@ -87,6 +87,7 @@ export default function App() {
             component={NewPostScreen}
             options={{
                 headerTitle: 'New Post',
+                headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: '#090820',
                 },
@@ -102,6 +103,7 @@ export default function App() {
             component={CommerceScreen}
             options={{
                 headerTitle: 'Buying',
+                headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: '#090820',
                 },
