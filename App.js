@@ -111,9 +111,6 @@ export default function App() {
                     }}
                 />
             </Tab.Navigator>
-            <StatusBar
-                style="light" //this took me an hour to figure out :(
-            />
         </NavigationContainer>
     );
 }

@@ -9,7 +9,6 @@ export default function SearchScreen({navigation}) {
                 style="light" //this took me an hour to figure out :(
             />
             <Text>search screen bitches!</Text>
-            <StatusBar style="auto"/>
         </View>
     );
 }

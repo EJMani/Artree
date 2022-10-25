@@ -9,7 +9,6 @@ export default function ProfileScreen({navigation}) {
                 style="light" //this took me an hour to figure out :(
             />
             <Text>profile screen bitches!</Text>
-            <StatusBar style="auto"/>
         </View>
     );
 }

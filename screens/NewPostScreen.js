@@ -9,7 +9,6 @@ export default function NewPostScreen({navigation}) {
                 style="light" //this took me an hour to figure out :(
             />
             <Text>new post screen bitches!</Text>
-            <StatusBar style="auto"/>
         </View>
     );
 }
