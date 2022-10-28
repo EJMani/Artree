@@ -1,13 +1,16 @@
-import {useState, useEffect, useCallback} from "react";
-import {Text, View, StyleSheet} from "react-native";
+import {useState, useEffect, useCallback, useRef } from "react";
+import {Text, View, StyleSheet, Button} from "react-native";
 import {useFonts} from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import {StatusBar} from "expo-status-bar";
+import {useNavigation} from "@react-navigation/native";
+import SortingPicker from "../ui_elements/SortingPicker";
 
 export default function HomeScreen() {
 
     //DB Connection setup
-    const [text, setText] = useState('shitty art')
+    const [text, setText] = useState('shitty art');
+    const nav = useNavigation();
 
     function dbTest() {
         fetch('http://54.236.91.239:3000/testdb')
@@ -28,8 +31,13 @@ export default function HomeScreen() {
             await SplashScreen.preventAutoHideAsync();
             // await NavigationBar.setBackgroundColorAsync('#ffffff00');
         }
-
         prepare();
+
+        nav.setOptions({
+            headerRight: () => (
+                <SortingPicker />
+            ),
+        });
     }, []);
 
     const onLayoutRootView = useCallback(async () => {

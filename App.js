@@ -18,6 +18,7 @@ export default function App() {
 
     const [fontsLoaded] = useFonts({
         'newake': require("artree/assets/newake-demo-400.otf"),
+        'inter': require("artree/assets/Inter-Bold.ttf"),
     });
 
     const onLayoutRootView = useCallback(async () => {
@@ -47,8 +48,9 @@ export default function App() {
                     },
                     headerTintColor: '#1FCEC6',
                     headerTitleStyle: {
-                        fontSize: 25,
+                        fontSize: 32,
                         fontFamily: 'newake',
+                        marginTop: 4,
                     },
                     tabBarIcon: ({color, size}) => {
                         let iconName;
