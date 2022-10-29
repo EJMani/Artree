@@ -13,15 +13,20 @@ export default function HomeScreen() {
     const [text, setText] = useState('shitty art');
     const nav = useNavigation();
 
-    function dbTest() {
-        fetch('http://54.236.91.239:3000/testdb')
-            .then(response => response.json())
-            .then(data => {
-                setText(data[0].Address)
-            });
-    }
+    // function dbTest() {
+    //     fetch('http://54.236.91.239:3000/getUser/nick')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setText(data[0])
+    //         });
+    //     fetch('http://54.236.91.239:3000/getRandomArtPiece')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setText(data[0])
+    //         });
+    // }
 
-    dbTest();
+    // dbTest();
 
     const [fontsLoaded] = useFonts({
         newake: require("artree/assets/newake-demo-400.otf"),
