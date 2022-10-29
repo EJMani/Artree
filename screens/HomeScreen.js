@@ -5,6 +5,7 @@ import * as SplashScreen from "expo-splash-screen";
 import {StatusBar} from "expo-status-bar";
 import {useNavigation} from "@react-navigation/native";
 import SortingPicker from "../ui_elements/SortingPicker";
+import BidButton from "../ui_elements/BidButton";
 
 export default function HomeScreen() {
 
@@ -23,7 +24,7 @@ export default function HomeScreen() {
     dbTest();
 
     const [fontsLoaded] = useFonts({
-        'newake': require("artree/assets/newake-demo-400.otf"),
+        newake: require("artree/assets/newake-demo-400.otf"),
     });
 
     useEffect(() => {
@@ -58,6 +59,7 @@ export default function HomeScreen() {
             <Text style={{fontFamily: "newake", fontSize: 30, color: "#1FCEC6"}}>
                 {text}
             </Text>
+            <BidButton></BidButton>
         </View>
     );
 }
