@@ -15,8 +15,8 @@ class SortingPicker extends Component {
         return (
             <View style={{borderRadius: 25, height: 30, overflow: 'hidden', translateX: -10,}}>
                 <Picker selectedValue={this.state.user} onValueChange={this.updateUser} style={styles.picker}>
-                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="popular" value="popular"/>
-                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="newest" value="newest"/>
+                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Popular" value="popular"/>
+                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Newest" value="newest"/>
                 </Picker>
             </View>
         );
