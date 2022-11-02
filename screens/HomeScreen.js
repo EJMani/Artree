@@ -7,6 +7,7 @@ import {useNavigation} from "@react-navigation/native";
 import SortingPicker from "../ui_elements/SortingPicker";
 import BidButton from "../ui_elements/BidButton";
 
+
 export default function HomeScreen() {
 
     //DB Connection setup
