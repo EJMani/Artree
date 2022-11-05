@@ -11,7 +11,7 @@ class Share extends Component {
           size={25}
           color="#ffffff"
           style={{ margin: 5, alignItems: "flex-end" }}
-          onPress={() => console.log("hello")}
+          onPress={() => console.log("Share")}
         />
       </View>
     );

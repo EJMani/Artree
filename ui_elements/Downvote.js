@@ -11,8 +11,8 @@ class Downvote extends Component {
           size={25}
           color="#ffffff"
           style={{ margin: 5 }}
+          onPress={() => console.log("Downvote")}
         />
-        <Text style={{ color: "white", marginTop: 10 }}>{post.votes}</Text>
       </View>
     );
   }

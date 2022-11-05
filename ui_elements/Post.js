@@ -1,12 +1,16 @@
 import React from "react";
 import { Image, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Divider, Icon } from "react-native-elements";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import Upvote from "../ui_elements/Upvote";
+import Downvote from "../ui_elements/Downvote";
+import Share from "../ui_elements/Share";
+import Save from "../ui_elements/Save";
+import Bid from "../ui_elements/Bid";
+import BidButton from "./BidButton";
 
 const Post = ({ post }) => {
   return (
-    <View style={{ marginBottom: 30 }}>
+    <View style={{ marginBottom: 14 }}>
       <Divider width={1000} orientation="vertical" />
       <PostHeader post={post} />
       <PostImage post={post} />
@@ -76,21 +80,13 @@ const PostFooter = ({ post }) => (
     }}
   >
     <View style={{ flex: 1, flexDirection: "row" }}>
-      <Ionicons
-        name="thumbs-up-outline"
-        size={25}
-        color="#ffffff"
-        style={{ marginTop: 5, marginLeft: 5 }}
-        onPress={() => console.log("upvote")}
-      />
-      <Ionicons
-        name="thumbs-down-outline"
-        size={25}
-        color="#ffffff"
-        style={{ margin: 5 }}
-        onPress={() => console.log("downvote")}
-      />
+      <Upvote />
+      <Downvote />
       <Text style={{ color: "white", marginTop: 10 }}>{post.votes}</Text>
+    </View>
+
+    <View>
+      <Bid post={post} />
     </View>
     <View
       style={{
@@ -100,20 +96,8 @@ const PostFooter = ({ post }) => (
         flexDirection: "row-reverse",
       }}
     >
-      <Ionicons
-        name="share-social-outline"
-        size={25}
-        color="#ffffff"
-        style={{ margin: 5, alignItems: "flex-end" }}
-        onPress={() => console.log("share")}
-      />
-      <Ionicons
-        name="bookmark-outline"
-        size={25}
-        color="#ffffff"
-        style={{ margin: 5, alignItems: "flex-end" }}
-        onPress={() => console.log("save")}
-      />
+      <Save />
+      <Share />
     </View>
   </View>
 );

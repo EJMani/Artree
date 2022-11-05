@@ -11,6 +11,7 @@ class Save extends Component {
           size={25}
           color="#ffffff"
           style={{ margin: 5, alignItems: "flex-end" }}
+          onPress={() => console.log("Save")}
         />
       </View>
     );
