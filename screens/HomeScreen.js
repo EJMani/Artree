@@ -18,24 +18,15 @@ import Post from "../ui_elements/Post";
 import { POSTS } from "../tempData/postData";
 
 export default function HomeScreen() {
-  //DB Connection setup
-  //const [text, setText] = useState("shitty art");
+
+  const [postData, setPostData] = useState([]);
   const nav = useNavigation();
 
-  // function dbTest() {
-  //     fetch('http://54.236.91.239:3000/getUser/nick')
-  //         .then(response => response.json())
-  //         .then(data => {
-  //             setText(data[0])
-  //         });
-  //     fetch('http://54.236.91.239:3000/getRandomArtPiece')
-  //         .then(response => response.json())
-  //         .then(data => {
-  //             setText(data[0])
-  //         });
-  // }
-
-  // dbTest();
+  function getRandomArtPieces() {
+      fetch('http://54.236.91.239:3000/getRandomArtPiece')
+          .then(response => response.json())
+          .then(data => {console.log(JSON.stringify(data)); setPostData(data[0])});
+  }
 
   const [fontsLoaded] = useFonts({
     newake: require("artree/assets/newake-demo-400.otf"),
@@ -47,6 +38,7 @@ export default function HomeScreen() {
       // await NavigationBar.setBackgroundColorAsync('#ffffff00');
     }
     prepare();
+    getRandomArtPieces();
 
     nav.setOptions({
       headerRight: () => <SortingPicker />,
