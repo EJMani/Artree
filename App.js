@@ -11,8 +11,10 @@ import NewPostScreen from "./screens/NewPostScreen";
 import CommerceScreen from "./screens/CommerceScreen";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const Tab = createBottomTabNavigator();
+const queryClient = new QueryClient();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -31,6 +33,7 @@ export default function App() {
   }
 
   return (
+    <QueryClientProvider client={queryClient}>
     <NavigationContainer onLayout={onLayoutRootView}>
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -115,5 +118,6 @@ export default function App() {
         />
       </Tab.Navigator>
     </NavigationContainer>
+    </QueryClientProvider>
   );
 }

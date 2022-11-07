@@ -2,8 +2,12 @@ import {StatusBar} from 'expo-status-bar';
 import {Text, StyleSheet, Button, View, Image} from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
 import React, { useEffect, Component } from 'react';
+import {useQuery, useQueryClient} from '@tanstack/react-query';
 
 export default function ProfileScreen({navigation}) {
+    const queryClient = useQueryClient()
+
+
     const UserID = 2;
     let [user, updateUser] = React.useState({});
     var [artArray, updateArray] = React.useState([]);
@@ -21,11 +25,11 @@ export default function ProfileScreen({navigation}) {
         .then(data => {/*console.log(JSON.stringify(data));*/ updateArray(data);});
         return;
         }
-    //Still have a problem with excessive callbacks
+
     useEffect(() => {
         getUserInfo();
         getUserPics();
-      });
+      }, []);
     return (
         <View style={styles.container}>
             <View>

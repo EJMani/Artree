@@ -38,7 +38,7 @@ const PostHeader = ({ post }) => (
           padding: 10,
         }}
       >
-        {post.Title}
+        {post.title}
       </Text>
     </View>
 
@@ -48,7 +48,7 @@ const PostHeader = ({ post }) => (
         style={styles.proPic}
       />
       <Text style={{ color: "white", marginLeft: 5, fontWeight: "700" }}>
-        {post.user}
+        {post.username}
       </Text>
     </View>
   </View>
@@ -63,7 +63,7 @@ const PostImage = ({ post }) => (
   >
     <Image
       //stand-in post image
-      source={{ uri: post.imageURL }}
+      source={{ uri: post.link }}
       style={{ height: "100%", resizeMode: "cover" }}
     />
   </View>
@@ -82,7 +82,7 @@ const PostFooter = ({ post }) => (
     <View style={{ flex: 1, flexDirection: "row" }}>
       <Upvote />
       <Downvote />
-      <Text style={{ color: "white", marginTop: 10 }}>{post.votes}</Text>
+      <Text style={{ color: "white", marginTop: 10 }}>{post.upvotes}</Text>
     </View>
 
     <View>
