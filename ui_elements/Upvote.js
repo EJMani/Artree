@@ -8,8 +8,13 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-class Upvote extends Component {
-  render() {
+export default function Upvote({artID}) {
+
+    async function upvote(){
+      await fetch('http://54.236.91.239:3000/upvote/'+artID,{ method: 'POST'})
+    }
+  
+
     return (
       <TouchableOpacity>
         <Ionicons
@@ -17,11 +22,8 @@ class Upvote extends Component {
           size={25}
           color="#ffffff"
           style={{ marginTop: 5, marginLeft: 5 }}
-          onPress={() => console.log("Upvote")}
+          onPress={() => {upvote(); console.log(artID+" Upvoted")}}
         />
       </TouchableOpacity>
     );
-  }
 }
-
-export default Upvote;

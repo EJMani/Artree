@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import { StyleSheet, View, Pressable, Text } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-class Downvote extends Component {
-  render() {
+export default function Downvote({artID}){
+
+    async function downvote(){
+      await fetch('http://54.236.91.239:3000/downvote/'+artID,{ method: 'POST'})
+    }
+
+
     return (
       <View style={{ borderRadius: 8, overflow: "hidden" }}>
         <Ionicons
@@ -11,11 +16,8 @@ class Downvote extends Component {
           size={25}
           color="#ffffff"
           style={{ margin: 5 }}
-          onPress={() => console.log("Downvote")}
+          onPress={() => { downvote();console.log(artID+" Downvoted")}}
         />
       </View>
     );
-  }
 }
-
-export default Downvote;

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Image, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Divider, Icon } from "react-native-elements";
 import Upvote from "../ui_elements/Upvote";
@@ -14,7 +14,7 @@ const Post = ({ post }) => {
       <Divider width={1000} orientation="vertical" />
       <PostHeader post={post} />
       <PostImage post={post} />
-      <PostFooter post={post} />
+      <PostFooter post={post}/>
     </View>
   );
 };
@@ -44,7 +44,7 @@ const PostHeader = ({ post }) => (
 
     <View style={{ flexDirection: "row", alignItems: "center", padding: 5 }}>
       <Image
-        source={require("../assets/adaptive-icon.png")}
+        source={{ uri: post.userLink }}//source={require("../assets/adaptive-icon.png")}
         style={styles.proPic}
       />
       <Text style={{ color: "white", marginLeft: 5, fontWeight: "700" }}>
@@ -80,8 +80,8 @@ const PostFooter = ({ post }) => (
     }}
   >
     <View style={{ flex: 1, flexDirection: "row" }}>
-      <Upvote />
-      <Downvote />
+      <Upvote artID={post.artID}/>
+      <Downvote artID={post.artID}/>
       <Text style={{ color: "white", marginTop: 10 }}>{post.upvotes}</Text>
     </View>
 

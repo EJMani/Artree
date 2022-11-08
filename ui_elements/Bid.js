@@ -7,7 +7,7 @@ export default function Bid({ post, text, onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.button}>
-        <Text style={styles.title}>Bid: ${post.currentBid}</Text>
+        <Text style={styles.title}>Bid: ${post.bidPrice}</Text>
       </View>
     </TouchableOpacity>
   );

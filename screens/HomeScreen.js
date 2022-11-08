@@ -17,19 +17,34 @@ import BidButton from "../ui_elements/BidButton";
 import { Header } from "react-native-elements";
 import Post from "../ui_elements/Post";
 import { POSTS } from "../tempData/postData";
-import {useQuery, useQueryClient} from '@tanstack/react-query';
+import {useQuery, useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
 
 export default function HomeScreen() {
   
   const queryClient = useQueryClient()
+  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    const paddingToBottom = 0;
+    return layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+  };
 
   //React query fetches posts on load
-  async function fetchPosts(){
-    const res  = await fetch('http://54.236.91.239:3000/getRandomArtPiece');
+  async function fetchPosts({pageParam = 1}){
+    const res  = await fetch('http://54.236.91.239:3000/getRandomArtPiece?_page='+pageParam);
     const data = res.json();
     return data;
   }
-  const { isLoading, isError, data, error } = useQuery({ queryKey: ['posts'], queryFn: fetchPosts })
+  const { isLoading, isError, data, error, hasNextPage, fetchNextPage, isFetching, isFetchingNextPage } = useInfiniteQuery({ 
+    queryKey: ['posts'], 
+    queryFn: fetchPosts,
+    getNextPageParam: (_lastPage, pages) =>{
+      if(pages.length < 8){
+        return pages.length + 1;
+      }else{
+        return undefined;
+      }
+    }
+  })
   const nav = useNavigation();
 
   const [fontsLoaded] = useFonts({
@@ -72,7 +87,6 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-      {console.log(JSON.stringify(data))}
       <StatusBar
         style="light" //this took me an hour to figure out :(
       />
@@ -81,9 +95,17 @@ export default function HomeScreen() {
       </Text> */}
       {/* <Header /> */}
       
-      <ScrollView>
-        {data.map((post, index) => (
-          <Post post={post} key={index} />
+      <ScrollView onScroll={({nativeEvent})=>{
+        if(isCloseToBottom(nativeEvent)){
+          fetchNextPage();
+        }
+      }} scrollEventThrottle={400}>
+        {data?.pages.map((posts, page) => (
+          <View key ={page}>
+              {posts.map((post, index)=>(
+                <Post post={post} key={index}/>
+              ))}
+          </View>
         ))}
       </ScrollView>
     </SafeAreaView>
