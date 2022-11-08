@@ -23,7 +23,7 @@ export default function HomeScreen() {
   
   const queryClient = useQueryClient()
   const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
-    const paddingToBottom = 0;
+    const paddingToBottom = 20;
     return layoutMeasurement.height + contentOffset.y >=
       contentSize.height - paddingToBottom;
   };

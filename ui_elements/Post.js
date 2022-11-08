@@ -69,38 +69,42 @@ const PostImage = ({ post }) => (
   </View>
 );
 
-const PostFooter = ({ post }) => (
-  <View
-    style={{
-      backgroundColor: "#383CF4",
-      height: 50,
-      justifyContent: "space-between",
-      flexDirection: "row",
-      alignItems: "center",
-    }}
-  >
-    <View style={{ flex: 1, flexDirection: "row" }}>
-      <Upvote artID={post.artID}/>
-      <Downvote artID={post.artID}/>
-      <Text style={{ color: "white", marginTop: 10 }}>{post.upvotes}</Text>
-    </View>
-
-    <View>
-      <Bid post={post} />
-    </View>
+const PostFooter = ({ post }) => {
+  let [upvotes, setUpvotes] = useState(post.upvotes);
+  function upvote(){ setUpvotes(upvotes+1); }
+  function downvote(){ setUpvotes(upvotes-1); }
+  return (
     <View
       style={{
-        flex: 1,
-        alignItems: "flex-end",
-        marginRight: 5,
-        flexDirection: "row-reverse",
+        backgroundColor: "#383CF4",
+        height: 50,
+        justifyContent: "space-between",
+        flexDirection: "row",
+        alignItems: "center",
       }}
     >
-      <Save />
-      <Share />
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        <Upvote artID={post.artID} onPress={upvote}/>
+        <Downvote artID={post.artID} onPress={downvote}/>
+        <Text style={{ color: "white", marginTop: 10 }}>{upvotes}</Text>
+      </View>
+
+      <View>
+        <Bid post={post} />
+      </View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "flex-end",
+          marginRight: 5,
+          flexDirection: "row-reverse",
+        }}
+      >
+        <Save />
+        <Share />
+      </View>
     </View>
-  </View>
-);
+)};
 
 const styles = StyleSheet.create({
   proPic: {

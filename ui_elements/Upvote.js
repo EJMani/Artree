@@ -8,9 +8,8 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-export default function Upvote({artID}) {
-
-    async function upvote(){
+    export default function Upvote({artID, onPress}) {
+      async function upvote(){
       await fetch('http://54.236.91.239:3000/upvote/'+artID,{ method: 'POST'})
     }
   
@@ -22,7 +21,7 @@ export default function Upvote({artID}) {
           size={25}
           color="#ffffff"
           style={{ marginTop: 5, marginLeft: 5 }}
-          onPress={() => {upvote(); console.log(artID+" Upvoted")}}
+          onPress={() => {upvote(); onPress(); console.log(artID+" Upvoted")}}
         />
       </TouchableOpacity>
     );
