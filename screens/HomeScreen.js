@@ -17,7 +17,8 @@ import BidButton from "../ui_elements/BidButton";
 import { Header } from "react-native-elements";
 import Post from "../ui_elements/Post";
 import { POSTS } from "../tempData/postData";
-import {useQuery, useInfiniteQuery, useQueryClient} from '@tanstack/react-query';
+import {useQueryClient} from '@tanstack/react-query';
+import getFeed from "../Hooks/getFeed";
 
 export default function HomeScreen() {
   
@@ -29,22 +30,7 @@ export default function HomeScreen() {
   };
 
   //React query fetches posts on load
-  async function fetchPosts({pageParam = 1}){
-    const res  = await fetch('http://54.236.91.239:3000/getRandomArtPiece?_page='+pageParam);
-    const data = res.json();
-    return data;
-  }
-  const { isLoading, isError, data, error, hasNextPage, fetchNextPage, isFetching, isFetchingNextPage } = useInfiniteQuery({ 
-    queryKey: ['posts'], 
-    queryFn: fetchPosts,
-    getNextPageParam: (_lastPage, pages) =>{
-      if(pages.length < 8){
-        return pages.length + 1;
-      }else{
-        return undefined;
-      }
-    }
-  })
+  const { isLoading, isError, data, error, hasNextPage, fetchNextPage, isFetching, isFetchingNextPage } = getFeed();
   const nav = useNavigation();
 
   const [fontsLoaded] = useFonts({
@@ -96,13 +82,13 @@ export default function HomeScreen() {
       {/* <Header /> */}
       
       <ScrollView onScroll={({nativeEvent})=>{
-        if(isCloseToBottom(nativeEvent)){
+        if(isCloseToBottom(nativeEvent) && hasNextPage && !isFetchingNextPage){
           fetchNextPage();
         }
       }} scrollEventThrottle={400}>
         {data?.pages.map((posts, page) => (
           <View key ={page}>
-              {posts.map((post, index)=>(
+              {posts.posts.map((post, index)=>(
                 <Post post={post} key={index}/>
               ))}
           </View>
