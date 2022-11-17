@@ -11,7 +11,6 @@ export default function ProfileScreen({navigation}) {
 
 
     const {userInstance} = useContext(UserContext);
-    console.log(userInstance);
     let [user, updateUser] = React.useState({});
     var [artArray, updateArray] = React.useState([]);
 

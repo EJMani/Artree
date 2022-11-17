@@ -15,7 +15,7 @@ import { useState, useContext } from 'react';
 import UserContext from '../context/UserContext';
 
 export default function NewPostScreen({navigation}) {
-    const {userInstance} = useContext(useContext);
+    const {userInstance} = useContext(UserContext);
 
     //New Post variables
     let [image, setImage] = useState(null);
