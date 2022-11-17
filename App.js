@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useCallback } from "react";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
@@ -12,6 +11,7 @@ import CommerceScreen from "./screens/CommerceScreen";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { UserProvider } from "./context/UserContext";
 
 const Tab = createBottomTabNavigator();
 const queryClient = new QueryClient();
@@ -35,6 +35,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
     <NavigationContainer onLayout={onLayoutRootView}>
+    <UserProvider>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarShowLabel: false,
@@ -117,6 +118,7 @@ export default function App() {
           }}
         />
       </Tab.Navigator>
+      </UserProvider>
     </NavigationContainer>
     </QueryClientProvider>
   );

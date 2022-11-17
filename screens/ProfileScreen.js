@@ -1,27 +1,29 @@
 import {StatusBar} from 'expo-status-bar';
 import {Text, StyleSheet, Button, View, Image} from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
-import React, { useEffect, Component } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import BoxContainer from '../ui_elements/BoxContainer';
+import UserContext from '../context/UserContext';
 
 export default function ProfileScreen({navigation}) {
     const queryClient = useQueryClient()
 
 
-    const UserInstance = 4;
+    const {userInstance} = useContext(UserContext);
+    console.log(userInstance);
     let [user, updateUser] = React.useState({});
     var [artArray, updateArray] = React.useState([]);
 
     function getUserInfo(){
-        fetch('http://54.236.91.239:3000/getUser/'+UserInstance)
+        fetch('http://54.236.91.239:3000/getUser/'+userInstance)
         .then(response => response.json())
         .then(data => {/*console.log(JSON.stringify(data));*/ updateUser(data[0]);});
         return;
         }
         
     function getUserPics(){
-        fetch('http://54.236.91.239:3000/getUserArt/'+UserInstance)
+        fetch('http://54.236.91.239:3000/getUserArt/'+userInstance)
         .then(response => response.json())
         .then(data => {/*console.log(JSON.stringify(data));*/ updateArray(data);});
         return;

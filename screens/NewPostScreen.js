@@ -11,10 +11,12 @@ import TitleBox from '../ui_elements/TitleBox';
 import TagBox from '../ui_elements/TagBox';
 import PriceBox from '../ui_elements/PriceBox';
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import UserContext from '../context/UserContext';
 
 export default function NewPostScreen({navigation}) {
-    const UserInstance = 4;
+    const {userInstance} = useContext(useContext);
+
     //New Post variables
     let [image, setImage] = useState(null);
     let [bidPrice, setPrice] = useState(0);
@@ -65,7 +67,7 @@ export default function NewPostScreen({navigation}) {
               method: 'POST',
               body: createFormData(image, 
                 {
-                    userID:UserInstance,
+                    userID:userInstance,
                     title:title,
                     sale:sale,
                     bidPrice:bidPrice,
