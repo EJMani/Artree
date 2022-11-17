@@ -13,7 +13,12 @@ class TagBox extends Component {
     render() {
         return (
             <View style={{borderRadius: 25, translateX: -30}}>
-                <TextInput style = {styles.TitleBox}> Select your tags</TextInput>  
+                <TextInput
+                    placeholder='Select your tags' 
+                    onChangeText={this.props.onChangeText}  
+                    value={this.props.value} 
+                style = {styles.TitleBox}> 
+                </TextInput>  
             </View>
         );
     }
@@ -25,6 +30,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         backgroundColor: '#fff',
         width: 150,      
-        translateX: -30
+        translateX: -30,
+        borderRadius: 5
     },
 })

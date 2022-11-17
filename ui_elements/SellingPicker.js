@@ -15,6 +15,7 @@ class SellingPicker extends Component {
         return (
             <View style={{borderRadius: 25, height: 30, overflow: 'hidden', translateX: -10,}}>
                 <Picker selectedValue={this.state.user} onValueChange={this.updateUser} style={styles.picker}>
+                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Not for Sale" value="Not for Sale"/>
                     <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Auction" value="Auction"/>
                     <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Buy Now" value="Buy Now"/>
                     <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Commission" value="Buy Now"/>

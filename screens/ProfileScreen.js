@@ -9,19 +9,19 @@ export default function ProfileScreen({navigation}) {
     const queryClient = useQueryClient()
 
 
-    const UserID = 2;
+    const UserInstance = 4;
     let [user, updateUser] = React.useState({});
     var [artArray, updateArray] = React.useState([]);
 
     function getUserInfo(){
-        fetch('http://54.236.91.239:3000/getUser/'+UserID)
+        fetch('http://54.236.91.239:3000/getUser/'+UserInstance)
         .then(response => response.json())
         .then(data => {/*console.log(JSON.stringify(data));*/ updateUser(data[0]);});
         return;
         }
         
     function getUserPics(){
-        fetch('http://54.236.91.239:3000/getUserArt/'+UserID)
+        fetch('http://54.236.91.239:3000/getUserArt/'+UserInstance)
         .then(response => response.json())
         .then(data => {/*console.log(JSON.stringify(data));*/ updateArray(data);});
         return;
@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     container2 :{
         height: 80,
         width: 321,
-        backgroundColor: '#383CF4'
+        backgroundColor: '#383CF4',
+        borderRadius: 10    
     },
     container3:{
         height: 200,

@@ -13,7 +13,11 @@ class PriceBox extends Component {
     render() {
         return (
             <View style={{borderRadius: 25, translateX: -20}}>
-                <TextInput style = {styles.PriceBox}> State your price</TextInput>  
+                <TextInput
+                placeholder='0.00' 
+                onChangeText={this.props.onChangeText}  
+                value={this.props.value} 
+                style = {styles.PriceBox}></TextInput>  
             </View>
         );
     }
@@ -24,7 +28,8 @@ const styles = StyleSheet.create({
     PriceBox:{
         overflow: "hidden",
         backgroundColor: '#fff',
-        width: 150,      
+        width: 150,
+        borderRadius: 5      
         
     },
 })

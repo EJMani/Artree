@@ -3,6 +3,7 @@ import { View, StyleSheet} from 'react-native';
 import { TextInput } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from "expo-splash-screen";
+import ThemedDialog from 'react-native-elements/dist/dialog/Dialog';
 
 class TitleBox extends Component {
 
@@ -13,7 +14,11 @@ class TitleBox extends Component {
     render() {
         return (
             <View style={{borderRadius: 25, translateX: -30}}>
-                <TextInput style = {styles.TitleBox}> type your title here</TextInput>  
+                <TextInput placeholder='type your title here' 
+                            onChangeText={this.props.onChangeText}  
+                            value={this.props.value} 
+                            style = {styles.TitleBox}>
+                </TextInput>  
             </View>
         );
     }
@@ -25,6 +30,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         backgroundColor: '#fff',
         width: 150,      
-        translateX: -30
+        translateX: -30,
+        borderRadius: 5
     },
 })
