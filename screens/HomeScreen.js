@@ -9,6 +9,16 @@ import Post from "../ui_elements/Post";
 import { useQueryClient } from "@tanstack/react-query";
 import getFeed from "../Hooks/getFeed";
 
+/*-------------------------------------
+
+http://54.236.91.239:3000/getComments/12
+
+api call for getting comments;
+only one art has comments and its artID=12
+idk what else it should call
+
+-------------------------------------*/
+
 export default function HomeScreen({ navigation }) {
   const queryClient = useQueryClient();
   const isCloseToBottom = ({
@@ -40,6 +50,8 @@ export default function HomeScreen({ navigation }) {
     newake: require("artree/assets/newake-demo-400.otf"),
   });
 
+
+  let sorting = "popular";
   useEffect(() => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
@@ -48,8 +60,9 @@ export default function HomeScreen({ navigation }) {
     prepare();
 
     nav.setOptions({
-      headerRight: () => <SortingPicker />,
+      headerRight: () => <SortingPicker/>,
     });
+    //console.log(sorting);
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
