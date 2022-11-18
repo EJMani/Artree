@@ -1,42 +1,44 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Button,
-  SafeAreaView,
-  ScrollView,
-  Image
-} from "react-native";
+import React, { useEffect, useCallback, useRef } from "react";
+import { Text, View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import SortingPicker from "../ui_elements/SortingPicker";
-import BidButton from "../ui_elements/BidButton";
-import { Header } from "react-native-elements";
 import Post from "../ui_elements/Post";
-import { POSTS } from "../tempData/postData";
-import {useQueryClient} from '@tanstack/react-query';
+import { useQueryClient } from "@tanstack/react-query";
 import getFeed from "../Hooks/getFeed";
 
-export default function HomeScreen() {
-  
-  const queryClient = useQueryClient()
-  const isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+export default function HomeScreen({ navigation }) {
+  const queryClient = useQueryClient();
+  const isCloseToBottom = ({
+    layoutMeasurement,
+    contentOffset,
+    contentSize,
+  }) => {
     const paddingToBottom = 20;
-    return layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom;
+    return (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    );
   };
 
   //React query fetches posts on load
-  const { isLoading, isError, data, error, hasNextPage, fetchNextPage, isFetching, isFetchingNextPage } = getFeed();
+  const {
+    isLoading,
+    isError,
+    data,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = getFeed();
   const nav = useNavigation();
 
   const [fontsLoaded] = useFonts({
     newake: require("artree/assets/newake-demo-400.otf"),
   });
-
 
   useEffect(() => {
     async function prepare() {
@@ -62,14 +64,13 @@ export default function HomeScreen() {
 
   //If Posts have not fully loaded yet
   if (isLoading) {
-    return <Text>Loading...</Text>
+    return <Text>Loading...</Text>;
   }
 
   //If Posts have error loading
   if (isError) {
-    return <Text>Error: {error.message}</Text>
+    return <Text>Error: {error.message}</Text>;
   }
-
 
   return (
     <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
@@ -80,17 +81,23 @@ export default function HomeScreen() {
         {text}
       </Text> */}
       {/* <Header /> */}
-      
-      <ScrollView onScroll={({nativeEvent})=>{
-        if(isCloseToBottom(nativeEvent) && hasNextPage && !isFetchingNextPage){
-          fetchNextPage();
-        }
-      }} scrollEventThrottle={400}>
+      <ScrollView
+        onScroll={({ nativeEvent }) => {
+          if (
+            isCloseToBottom(nativeEvent) &&
+            hasNextPage &&
+            !isFetchingNextPage
+          ) {
+            fetchNextPage();
+          }
+        }}
+        scrollEventThrottle={400}
+      >
         {data?.pages.map((posts, page) => (
-          <View key ={page}>
-              {posts.posts.map((post, index)=>(
-                <Post post={post} key={index}/>
-              ))}
+          <View key={page}>
+            {posts.posts.map((post, index) => (
+              <Post post={post} key={index} />
+            ))}
           </View>
         ))}
       </ScrollView>

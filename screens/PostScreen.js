@@ -1,30 +1,44 @@
-import React, { useState } from "react";
+import { StatusBar } from "expo-status-bar";
 import {
+  ScrollView,
   Image,
-  View,
   Text,
   StyleSheet,
-  TouchableWithoutFeedback,
+  Button,
+  View,
+  SafeAreaView,
 } from "react-native";
-import { Divider, Icon } from "react-native-elements";
+import { useState } from "react";
+import { useRoute } from "@react-navigation/native";
 import Upvote from "../ui_elements/Upvote";
 import Downvote from "../ui_elements/Downvote";
 import Share from "../ui_elements/Share";
 import Save from "../ui_elements/Save";
 import Bid from "../ui_elements/Bid";
-import { useNavigation } from "@react-navigation/native";
 
-const Post = ({ post }) => {
-  const navigation = useNavigation();
+export default function PostScreen() {
+  const route = useRoute();
+  const post = route.params.post;
   return (
-    <View style={{ marginBottom: 14 }}>
-      <Divider width={1000} orientation="vertical" />
-      <PostHeader post={post} />
-      <PostImage post={post} navigation={navigation} />
-      <PostFooter post={post} />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView minimumZoomScale={1} maximumZoomScale={5}>
+        <View
+          style={{
+            width: "100%",
+            height: 450,
+          }}
+        >
+          <PostHeader post={route.params.post} />
+          <Image
+            source={{ uri: post.link }}
+            style={{ height: "100%", resizeMode: "cover" }}
+          />
+        </View>
+        <PostFooter post={route.params.post} />
+      </ScrollView>
+    </SafeAreaView>
   );
-};
+}
 
 const PostHeader = ({ post }) => (
   <View
@@ -58,28 +72,6 @@ const PostHeader = ({ post }) => (
         {post.username}
       </Text>
     </View>
-  </View>
-);
-
-const PostImage = ({ post, username, title, navigation, uri, proPic }) => (
-  <View
-    style={{
-      width: "100%",
-      height: 450,
-    }}
-  >
-    <TouchableWithoutFeedback
-      onPress={() =>
-        navigation.navigate("PostScreen", {
-          post,
-        })
-      }
-    >
-      <Image
-        source={{ uri: post.link }}
-        style={{ height: "100%", resizeMode: "cover" }}
-      />
-    </TouchableWithoutFeedback>
   </View>
 );
 
@@ -134,6 +126,12 @@ const styles = StyleSheet.create({
     borderWidth: 1.6,
     borderColor: "fff",
   },
+  container: {
+    flex: 1,
+    widthValues: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
+    backgroundColor: "#090820",
+  },
 });
-
-export default Post;
