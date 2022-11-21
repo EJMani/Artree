@@ -11,12 +11,40 @@ const HomeStack = () => {
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerTitle: "artree",
+          headerStyle: {
+            shadowColor: "transparent",
+            backgroundColor: "#090820",
+            borderBottomWidth: 0,
+          },
+          headerTintColor: "#1FCEC6",
+          headerTitleStyle: {
+            fontSize: 32,
+            fontFamily: "newake",
+            marginTop: 4,
+          },
+        }}
       />
       <Stack.Screen
         name="PostScreen"
         component={PostScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerTitle: "artree",
+          headerStyle: {
+            shadowColor: "transparent",
+            backgroundColor: "#090820",
+            borderBottomWidth: 0,
+          },
+          headerTintColor: "#1FCEC6",
+          headerTitleStyle: {
+            fontSize: 32,
+            fontFamily: "newake",
+            marginTop: 4,
+          },
+        }}
       />
     </Stack.Navigator>
   );
