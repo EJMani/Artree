@@ -1,3 +1,4 @@
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   ScrollView,
@@ -7,6 +8,7 @@ import {
   Button,
   View,
   SafeAreaView,
+  TextInput,
 } from "react-native";
 import { useState } from "react";
 import { useRoute } from "@react-navigation/native";
@@ -15,12 +17,15 @@ import Downvote from "../ui_elements/Downvote";
 import Share from "../ui_elements/Share";
 import Save from "../ui_elements/Save";
 import Bid from "../ui_elements/Bid";
+import ReportButton from "../ui_elements/ReportButton";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function PostScreen() {
   const route = useRoute();
   const post = route.params.post;
+  const [comment, setComment] = useState("this be a comment");
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} flexDirection="column">
       <ScrollView minimumZoomScale={1} maximumZoomScale={5}>
         <View
           style={{
@@ -35,6 +40,8 @@ export default function PostScreen() {
           />
         </View>
         <PostFooter post={route.params.post} />
+        {/* <Comments post={post} /> */}
+        <CommentBox />
       </ScrollView>
     </SafeAreaView>
   );
@@ -87,7 +94,7 @@ const PostFooter = ({ post }) => {
     <View
       style={{
         backgroundColor: "#383CF4",
-        height: 50,
+        height: 55,
         justifyContent: "space-between",
         flexDirection: "row",
         alignItems: "center",
@@ -117,6 +124,48 @@ const PostFooter = ({ post }) => {
   );
 };
 
+const CommentBox = ({ post }) => (
+  <View flexDirection="row">
+    <TextInput
+      style={styles.input}
+      onChangeText={(val) => console.log(val)}
+      placeholder="add a comment..."
+    />
+    <Ionicons
+      name="arrow-redo-outline"
+      size={35}
+      color="#1FCEC6"
+      style={{ marginTop: 10, marginLeft: 0 }}
+      onPress={() => console.log("comment sent")}
+    />
+  </View>
+);
+
+// basic code for pulling comments, I cant really test this without database access
+const Comments = ({ post }) => (
+  <>
+    {post.comments.map((comment, index) => (
+      <View>
+        <View>
+          <TextInput
+            style={styles.input}
+            onChangeText={(val) => setComment(val)}
+            //value={text}
+            placeholder="add a comment..."
+          />
+        </View>
+        <View key={index}>
+          <Text style={{ color: "white" }}>
+            <Text style={{ fontWeight: "600" }}>{comment.user}</Text>
+            {comment.comment}
+          </Text>
+          <ReportButton />
+        </View>
+      </View>
+    ))}
+  </>
+);
+
 const styles = StyleSheet.create({
   proPic: {
     width: 35,
@@ -133,5 +182,16 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "stretch",
     backgroundColor: "#090820",
+  },
+  input: {
+    color: "black",
+    height: 40,
+    width: "82%",
+    margin: 12,
+    borderWidth: 1,
+    borderColor: "white",
+    borderRadius: 50,
+    padding: 10,
+    backgroundColor: "white",
   },
 });

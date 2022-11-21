@@ -8,6 +8,7 @@ import SortingPicker from "../ui_elements/SortingPicker";
 import Post from "../ui_elements/Post";
 import { useQueryClient } from "@tanstack/react-query";
 import getFeed from "../Hooks/getFeed";
+import { POSTS } from "../tempData/postData";
 
 export default function HomeScreen({ navigation }) {
   const queryClient = useQueryClient();

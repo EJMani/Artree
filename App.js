@@ -88,6 +88,7 @@ export default function App() {
                 headerTitle: "artree",
                 headerTitleAlign: "left",
                 headerRight: () => <SortingPicker />,
+                headerShown: false,
               }}
             />
             <Tab.Screen
