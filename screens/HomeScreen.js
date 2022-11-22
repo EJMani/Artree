@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from "react";
+import React, { useEffect, useCallback, useContext } from "react";
 import { Text, View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -7,10 +7,14 @@ import { useNavigation } from "@react-navigation/native";
 import SortingPicker from "../ui_elements/SortingPicker";
 import Post from "../ui_elements/Post";
 import { useQueryClient } from "@tanstack/react-query";
-import getFeed from "../Hooks/getFeed";
+import {getFeedByDate, getFeedByUpvotes} from "../Hooks/getFeed";
 import { POSTS } from "../tempData/postData";
+import UserContext from '../context/UserContext';
+import ScrollContext from "../context/ScrollContext";
 
 export default function HomeScreen({ navigation }) {
+  const {userInstance} = useContext(UserContext);
+  const {filter} = useContext(ScrollContext);
   const queryClient = useQueryClient();
   const isCloseToBottom = ({
     layoutMeasurement,
@@ -24,25 +28,33 @@ export default function HomeScreen({ navigation }) {
     );
   };
 
+  function checkFilter(){
+    if(filter === "newest"){
+      return getFeedByDate();
+    }else{
+      return getFeedByUpvotes();
+    }
+  }
+
   //React query fetches posts on load
-  const {
-    isLoading,
-    isError,
-    data,
-    error,
-    hasNextPage,
-    fetchNextPage,
-    isFetching,
-    isFetchingNextPage,
-  } = getFeed();
+    const {
+      isLoading,
+      isError,
+      data,
+      error,
+      hasNextPage,
+      fetchNextPage,
+      refetch,
+      isFetchingNextPage,
+    } = checkFilter();
+  
+  
   const nav = useNavigation();
 
   const [fontsLoaded] = useFonts({
     newake: require("artree/assets/newake-demo-400.otf"),
   });
 
-
-  let sorting = "popular";
   useEffect(() => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
@@ -53,8 +65,9 @@ export default function HomeScreen({ navigation }) {
     nav.setOptions({
       headerRight: () => <SortingPicker/>,
     });
-    //console.log(sorting);
-  }, []);
+
+    refetch();
+  }, [filter]);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {

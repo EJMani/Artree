@@ -1,33 +1,30 @@
-import React, {Component} from 'react';
+import {useContext, Component} from 'react';
 import { View, StyleSheet, Platform} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from "expo-splash-screen";
+import ScrollContext from "../context/ScrollContext";
+import UserContext from '../context/UserContext';
 
-class SortingPicker extends Component {
+export default function SortingPicker() {
+    
+    const {filter, setFilter} = useContext(ScrollContext);
 
-    state = {user: "popular"}
-    updateUser = (user) => {
-        this.setState({ user: user })
-    }
+    let bottom=0;
+    Platform.OS === "android"? bottom=10 : bottom=95;
+        
+  
 
-    constructor(props){
-        super(props);
-        Platform.OS === "android"? this.bottom=10 : this.bottom=95;
-    }    
 
-    render() {
         return (
             <View style={{borderRadius: 25, height: 30, overflow: 'hidden', translateX: -10,}}>
-                <Picker selectedValue={this.state.user} onValueChange={this.updateUser} style={[styles.picker,{bottom:this.bottom}]}>
+                <Picker selectedValue={filter} onValueChange={setFilter} style={[styles.picker,{bottom:bottom}]}>
                     <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Popular" value="popular"/>
                     <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Newest" value="newest"/>
                 </Picker>
             </View>
         );
-    }
 }
-export default SortingPicker
 
 const styles = StyleSheet.create({
     picker:{

@@ -12,6 +12,7 @@ import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { UserProvider } from "./context/UserContext";
+import { ScrollProvider } from "./context/ScrollContext"
 import { HomeStack } from "./routes/HomeStack";
 import SortingPicker from "./ui_elements/SortingPicker";
 
@@ -40,6 +41,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <NavigationContainer onLayout={onLayoutRootView}>
         <UserProvider>
+        <ScrollProvider>
           <Tab.Navigator
             screenOptions={({ route }) => ({
               tabBarShowLabel: false,
@@ -124,6 +126,7 @@ export default function App() {
               }}
             />
           </Tab.Navigator>
+        </ScrollProvider>
         </UserProvider>
       </NavigationContainer>
     </QueryClientProvider>
