@@ -10,16 +10,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import getFeed from "../Hooks/getFeed";
 import { POSTS } from "../tempData/postData";
 
-/*-------------------------------------
-
-http://54.236.91.239:3000/getComments/12
-
-api call for getting comments;
-only one art has comments and its artID=12
-idk what else it should call
-
--------------------------------------*/
-
 export default function HomeScreen({ navigation }) {
   const queryClient = useQueryClient();
   const isCloseToBottom = ({
