@@ -43,10 +43,13 @@ export default function NewPostScreen({navigation}) {
       };
       const createFormData = (photo, body) => {
         const data = new FormData();
-      
+        const uriArray = photo.uri.split(".");
+        const fileExtension = uriArray[uriArray.length - 1];
+        const fileTypeExtended = `${photo.type}/${fileExtension}`
+
         data.append("mypic", {
-          name: photo.fileName,
-          type: photo.type,
+          name: "mypic",
+          type: fileTypeExtended,
           uri:
             Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
         });

@@ -11,6 +11,7 @@ import { getFeedByDate, getFeedByUpvotes } from "../Hooks/getFeed";
 import { POSTS } from "../tempData/postData";
 import UserContext from "../context/UserContext";
 import ScrollContext from "../context/ScrollContext";
+import Loading from "../ui_elements/Loading";
 
 export default function HomeScreen({ navigation }) {
   const { userInstance } = useContext(UserContext);
@@ -45,6 +46,7 @@ export default function HomeScreen({ navigation }) {
     hasNextPage,
     fetchNextPage,
     refetch,
+    isFetching,
     isFetchingNextPage,
   } = checkFilter();
 
@@ -79,8 +81,8 @@ export default function HomeScreen({ navigation }) {
   }
 
   //If Posts have not fully loaded yet
-  if (isLoading) {
-    return <Text>Loading...</Text>;
+  if (!isFetchingNextPage && (isLoading || isFetching)) {
+    return <Loading/>
   }
 
   //If Posts have error loading
