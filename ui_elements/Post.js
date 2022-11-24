@@ -5,17 +5,22 @@ import {
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
+  Modal,
+  TextInput,
 } from "react-native";
-import { Divider, Icon } from "react-native-elements";
+import { Divider } from "react-native-elements";
 import Upvote from "../ui_elements/Upvote";
 import Downvote from "../ui_elements/Downvote";
 import Share from "../ui_elements/Share";
 import Save from "../ui_elements/Save";
 import Bid from "../ui_elements/Bid";
 import { useNavigation } from "@react-navigation/native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import CustomButton from "./CustomButton";
 
 const Post = ({ post }) => {
   const navigation = useNavigation();
+
   return (
     <View style={{ marginBottom: 14 }}>
       <Divider width={1000} orientation="vertical" />
@@ -61,7 +66,7 @@ const PostHeader = ({ post }) => (
   </View>
 );
 
-const PostImage = ({ post, username, title, navigation, uri, proPic }) => (
+const PostImage = ({ post, navigation }) => (
   <View
     style={{
       width: "100%",
@@ -84,6 +89,7 @@ const PostImage = ({ post, username, title, navigation, uri, proPic }) => (
 );
 
 const PostFooter = ({ post }) => {
+  const [modalOpen, setModalOpen] = useState(false);
   let [upvotes, setUpvotes] = useState(post.upvotes);
   function upvote() {
     setUpvotes(upvotes + 1);
@@ -92,34 +98,82 @@ const PostFooter = ({ post }) => {
     setUpvotes(upvotes - 1);
   }
   return (
-    <View
-      style={{
-        backgroundColor: "#383CF4",
-        height: 50,
-        justifyContent: "space-between",
-        flexDirection: "row",
-        alignItems: "center",
-      }}
-    >
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <Upvote artID={post.artID} onPress={upvote} />
-        <Downvote artID={post.artID} onPress={downvote} />
-        <Text style={{ color: "white", marginTop: 10 }}>{upvotes}</Text>
-      </View>
-
+    <View>
       <View>
-        <Bid post={post} />
+        <Modal visible={modalOpen} transparent={true} animationType={"slide"}>
+          <View style={styles.modalBack}>
+            <View style={styles.modal}>
+              <Ionicons
+                name="arrow-back-outline"
+                size={35}
+                color="#000000"
+                style={{ margin: 15, alignItems: "flex-end" }}
+                onPress={() => setModalOpen(false)}
+              />
+              <Text style={{ paddingLeft: 10, fontSize: 45 }}>
+                Current Bid: ${post.bidPrice}
+              </Text>
+              <Text style={{ paddingLeft: 10, paddingTop: 30, fontSize: 35 }}>
+                Time Remaining: 3d 11h
+              </Text>
+              <View
+                style={{
+                  paddingTop: 30,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={{ paddingLeft: 10, fontSize: 35 }}>
+                  Enter your bid: $
+                </Text>
+                <TextInput
+                  keyboardType="numeric"
+                  style={styles.input}
+                  //onChangeText={console.log'bid input'}
+                  //value={comment}
+                  placeholder=""
+                />
+              </View>
+              <View style={{ paddingTop: 40, alignItems: "center" }}>
+                <CustomButton
+                  title="Place Bid"
+                  onPress={() => setModalOpen(false)}
+                />
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
       <View
         style={{
-          flex: 1,
-          alignItems: "flex-end",
-          marginRight: 5,
-          flexDirection: "row-reverse",
+          backgroundColor: "#383CF4",
+          height: 50,
+          justifyContent: "space-between",
+          flexDirection: "row",
+          alignItems: "center",
         }}
       >
-        <Save />
-        <Share />
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <Upvote artID={post.artID} onPress={upvote} />
+          <Downvote artID={post.artID} onPress={downvote} />
+          <Text style={{ color: "white", marginTop: 10 }}>{upvotes}</Text>
+        </View>
+
+        <View>
+          <Bid post={post} onPress={() => setModalOpen(true)} />
+        </View>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "flex-end",
+            marginRight: 5,
+            flexDirection: "row-reverse",
+          }}
+        >
+          <Save />
+          <Share />
+        </View>
       </View>
     </View>
   );
@@ -133,6 +187,39 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     borderWidth: 1.6,
     borderColor: "fff",
+  },
+  modalBack: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  modal: {
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    width: "100%",
+    height: "60%",
+    backgroundColor: "white",
+    //alignItems:'flex-start'
+  },
+  button: {
+    backgroundColor: "#FF70FB",
+    height: 45,
+    width: "50%",
+    borderRadius: "25",
+  },
+  input: {
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "black",
+    height: 40,
+    width: "25%",
+    margin: 20,
+    paddingLeft: 20,
+    borderWidth: 1,
+    borderColor: "black",
+    borderWidth: 2,
+    borderRadius: 50,
+    backgroundColor: "white",
   },
 });
 

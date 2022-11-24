@@ -7,14 +7,14 @@ import { useNavigation } from "@react-navigation/native";
 import SortingPicker from "../ui_elements/SortingPicker";
 import Post from "../ui_elements/Post";
 import { useQueryClient } from "@tanstack/react-query";
-import {getFeedByDate, getFeedByUpvotes} from "../Hooks/getFeed";
+import { getFeedByDate, getFeedByUpvotes } from "../Hooks/getFeed";
 import { POSTS } from "../tempData/postData";
-import UserContext from '../context/UserContext';
+import UserContext from "../context/UserContext";
 import ScrollContext from "../context/ScrollContext";
 
 export default function HomeScreen({ navigation }) {
-  const {userInstance} = useContext(UserContext);
-  const {filter} = useContext(ScrollContext);
+  const { userInstance } = useContext(UserContext);
+  const { filter } = useContext(ScrollContext);
   const queryClient = useQueryClient();
   const isCloseToBottom = ({
     layoutMeasurement,
@@ -28,27 +28,26 @@ export default function HomeScreen({ navigation }) {
     );
   };
 
-  function checkFilter(){
-    if(filter === "newest"){
+  function checkFilter() {
+    if (filter === "newest") {
       return getFeedByDate();
-    }else{
+    } else {
       return getFeedByUpvotes();
     }
   }
 
   //React query fetches posts on load
-    const {
-      isLoading,
-      isError,
-      data,
-      error,
-      hasNextPage,
-      fetchNextPage,
-      refetch,
-      isFetchingNextPage,
-    } = checkFilter();
-  
-  
+  const {
+    isLoading,
+    isError,
+    data,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    refetch,
+    isFetchingNextPage,
+  } = checkFilter();
+
   const nav = useNavigation();
 
   const [fontsLoaded] = useFonts({
@@ -63,7 +62,7 @@ export default function HomeScreen({ navigation }) {
     prepare();
 
     nav.setOptions({
-      headerRight: () => <SortingPicker/>,
+      headerRight: () => <SortingPicker />,
     });
 
     refetch();

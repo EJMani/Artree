@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import Post from "../ui_elements/Post";
 import { POSTS } from "../tempData/postData";

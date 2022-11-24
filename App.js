@@ -15,6 +15,7 @@ import { UserProvider } from "./context/UserContext";
 import { ScrollProvider } from "./context/ScrollContext"
 import { HomeStack } from "./routes/HomeStack";
 import SortingPicker from "./ui_elements/SortingPicker";
+import SettingsButton from "./ui_elements/SettingsButton";
 
 const Tab = createBottomTabNavigator();
 const queryClient = new QueryClient();
@@ -121,6 +122,7 @@ export default function App() {
               name="Profile"
               component={ProfileScreen}
               options={{
+                headerRight: () => <SettingsButton />,
                 headerTitle: "artree",
                 headerTitleAlign: "left",
               }}
