@@ -8,7 +8,6 @@ export default function CommerceScreen({navigation}) {
             <StatusBar
                 style="light" //this took me an hour to figure out :(
             />
-            <Text>commerce screen bitches!</Text>
         </View>
     );
 }

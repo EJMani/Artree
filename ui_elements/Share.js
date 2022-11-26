@@ -18,7 +18,7 @@ class Share extends Component {
                   console.log("Sharing");
                   const result = await Sharing.share({
                       message:
-                          'artree.com/post/54698547',
+                          'artree.com/post/' + Math.floor(Math.random() * (99999999 - 10000000 + 1) ),
                   });
                   if (result.action === Sharing.sharedAction) {
                       if (result.activityType) {
