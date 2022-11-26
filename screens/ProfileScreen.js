@@ -5,6 +5,7 @@ import React, { useEffect, useContext } from 'react';
 import {useQuery, useQueryClient} from '@tanstack/react-query';
 import BoxContainer from '../ui_elements/BoxContainer';
 import UserContext from '../context/UserContext';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function ProfileScreen({navigation}) {
     const queryClient = useQueryClient()
@@ -42,13 +43,15 @@ export default function ProfileScreen({navigation}) {
             <Text style = {{fontsize: 26, color: "#FFFFFF",translateX:-120, translateY: -20}}>About Me: </Text>
             <Text style = {{fontsize: 20, color: "#FFFFFF",translateX:-120, translateY: -20}}>{user.aboutMe}</Text>
             </BoxContainer>
-            <BoxContainer style = {styles.container3}>                
+            <BoxContainer style = {styles.container3}>
+                <ScrollView contentContainerStyle={styles.contentContainer}>          
                 {artArray.map((art) =>(
                 <View key={art.artID}>
                     <Text style = {{color: "#FFFFFF"}}>{art.title}</Text>
                     <Image  source={{ uri: art.link }} style={{ width: 150, height: 150 }}/>
                 </View>
                 ))}
+                </ScrollView>   
             </BoxContainer>   
             
             <StatusBar
@@ -79,7 +82,10 @@ const styles = StyleSheet.create({
         borderRadius: 10    
     },
     container3:{
-        height: 200,
+        height: 400,
         width: 365,
-    }
+    },
+    contentContainer: { 
+        paddingVertical: 20,
+     },
 });

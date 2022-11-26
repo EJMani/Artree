@@ -11,7 +11,7 @@ import TitleBox from '../ui_elements/TitleBox';
 import TagBox from '../ui_elements/TagBox';
 import PriceBox from '../ui_elements/PriceBox';
 import * as ImagePicker from 'expo-image-picker';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import UserContext from '../context/UserContext';
 
 export default function NewPostScreen({navigation}) {
@@ -23,6 +23,9 @@ export default function NewPostScreen({navigation}) {
     let [title, setTitle] = useState("");
     let [tags, setTags] = useState(""); 
     let [sale, isForSale] = useState(0);
+
+    let [dateInput, showDateInput] = useState(<></>)
+    let [days, setDate] = useState(-1);
 
 
     //gets image from camera roll -- hopefully works on android
@@ -41,7 +44,7 @@ export default function NewPostScreen({navigation}) {
           setImage(result);
         }
       };
-      const createFormData = (photo, body) => {
+    const createFormData = (photo, body) => {
         const data = new FormData();
         const uriArray = photo.uri.split(".");
         const fileExtension = uriArray[uriArray.length - 1];
@@ -60,12 +63,26 @@ export default function NewPostScreen({navigation}) {
         return data;
       };
 
+    const setEndDate = () =>{
+        if(days !== -1){
+            var today = new Date();
+            today.setDate(today.getDate() + parseInt(days));
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+            today = yyyy + '-' + mm + '-' + dd +' '+ 23 +':'+ 59 +':'+ 59;
+            return today;
+        }
+        return;
+    }
+
       async function uploadPost(){
         if(title == "" || image == null){
             return;
         }
 
         try {
+            console.log(setEndDate());
             await fetch("http://54.236.91.239:3000/NewPost",{
               method: 'POST',
               body: createFormData(image, 
@@ -74,7 +91,8 @@ export default function NewPostScreen({navigation}) {
                     title:title,
                     sale:sale,
                     bidPrice:bidPrice,
-                    tags:tags
+                    tags:tags,
+                    date:setEndDate(days)
                 })
             }) 
           } catch (error) {
@@ -87,7 +105,30 @@ export default function NewPostScreen({navigation}) {
         setTitle("");
         setTags(""); 
         isForSale(0);
+        setDate(-1);
       }
+
+
+      useEffect(()=>{
+        if(sale === 1){
+            showDateInput(<><Text style={{color: '#fff'}}>Auction Time(number of days):</Text><TextInput
+                keyboardType="numeric" 
+                onChangeText={setDate}  
+                value={days}
+                style={{
+                    overflow: "hidden",
+                    backgroundColor: '#fff',
+                    width: 50,
+                    borderRadius: 5,
+                    translateX: -20
+            }} 
+                /></>);
+        }else{
+            showDateInput(<></>)
+            setDate(-1);
+        }
+
+      },[sale])
 
 
     return (
@@ -111,7 +152,7 @@ export default function NewPostScreen({navigation}) {
                         accessibilityLabel="Select From Gallery"                                               
                 />             
                     <Button style= {{translateX: -15}}
-                        onPress={console.log('click')}
+                        
                         title="Take a Photo"
                         color="#ff70fb"
                         accessibilityLabel="Take a Photo"                                                                
@@ -122,8 +163,9 @@ export default function NewPostScreen({navigation}) {
                     <TagBox onChangeText={setTags} value={tags}/>
                 </BoxContainer>             
                 <BoxContainer style = {styles.container5}>
-                    <SellingPicker></SellingPicker>
+                    <SellingPicker onValueChange={isForSale} value={sale}></SellingPicker>
                 </BoxContainer>   
+                {dateInput}
                 <BoxContainer style = {styles.container6}>
                     <Text style = {{fontsize:20, color: "#FFFFFF", translateX: -25}}> Starting Bid/Price </Text>
                     <PriceBox onChangeText={setPrice} value={bidPrice}/>
@@ -156,7 +198,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'             
     }, 
     container2: {
-        height: 450,
+        height: 250,
         width: 375
     },
     container3: {

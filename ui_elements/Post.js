@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Image,
   View,
@@ -17,6 +17,7 @@ import Bid from "../ui_elements/Bid";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CustomButton from "./CustomButton";
+import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 
 const Post = ({ post }) => {
   const navigation = useNavigation();
@@ -89,6 +90,19 @@ const PostImage = ({ post, navigation }) => (
 );
 
 const PostFooter = ({ post }) => {
+  const QueryClient = useQueryClient()
+  const {isLoading, isRefetching, data, refetch, isError,isFetched} = useQuery({ 
+    queryKey: ['bidInfo', post.artID], 
+    queryFn: async ()=>{
+        const res  = await fetch(`http://54.236.91.239:3000/getAuctionInfo/${post.artID}`);
+        const data = res.json();
+        return data;
+    },
+    refetchOnWindowFocus:false,
+    enabled:false
+  })
+
+
   const [modalOpen, setModalOpen] = useState(false);
   let [upvotes, setUpvotes] = useState(post.upvotes);
   function upvote() {
@@ -97,10 +111,44 @@ const PostFooter = ({ post }) => {
   function downvote() {
     setUpvotes(upvotes - 1);
   }
+
+  //timer variables
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  let deadline = null;
+
+
+  const getTime = (deadline) => {
+    const time = Date.parse(deadline) - Date.now();
+
+    setDays(Math.floor(time / (1000 * 60 * 60 * 24)));
+    setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
+    setMinutes(Math.floor((time / 1000 / 60) % 60));
+    setSeconds(Math.floor((time / 1000) % 60));
+  };
+
+  if(isFetched){
+    deadline = data[0].endDate;
+  }
+
+  useEffect(() => {
+
+        const interval = setInterval(() => getTime(deadline), 1000);
+        
+        return () => clearInterval(interval);
+  }, [deadline]);
+
+  function handleModal(){
+    refetch();
+    setModalOpen(true);
+  }
+
   return (
     <View>
       <View>
-        <Modal visible={modalOpen} transparent={true} animationType={"slide"}>
+        <Modal visible={modalOpen && (deadline !== null)} transparent={true} animationType={"slide"}>
           <View style={styles.modalBack}>
             <View style={styles.modal}>
               <Ionicons
@@ -114,7 +162,7 @@ const PostFooter = ({ post }) => {
                 Current Bid: ${post.bidPrice}
               </Text>
               <Text style={{ paddingLeft: 10, paddingTop: 30, fontSize: 35 }}>
-                Time Remaining: 3d 11h
+                Time Remaining: {days}d-{hours}h-{minutes}m-{seconds}s
               </Text>
               <View
                 style={{
@@ -161,7 +209,7 @@ const PostFooter = ({ post }) => {
         </View>
 
         <View>
-          <Bid post={post} onPress={() => setModalOpen(true)} />
+          {post.forSale === 1? <Bid post={post} onPress={handleModal}/> : <></>}
         </View>
         <View
           style={{

@@ -14,11 +14,11 @@ class SellingPicker extends Component {
     render() {
         return (
             <View style={{borderRadius: 25, height: 30, overflow: 'hidden', translateX: -10,}}>
-                <Picker selectedValue={this.state.user} onValueChange={this.updateUser} style={styles.picker}>
-                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Not for Sale" value="Not for Sale"/>
-                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Auction" value="Auction"/>
-                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Buy Now" value="Buy Now"/>
-                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Commission" value="Buy Now"/>
+                <Picker selectedValue={this.props.value} onValueChange={this.props.onValueChange} style={styles.picker}>
+                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Not for Sale" value={parseInt(0)}/>
+                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Auction" value={parseInt(1)}/>
+                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Buy Now" value={parseInt(2)}/>
+                    <Picker.Item style={{fontSize: 14, fontFamily: 'inter',}} label="Commission" value={parseInt(3)}/>
                 </Picker>
             </View>
         );
