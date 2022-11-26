@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Pressable, Text } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {Share as Sharing} from 'react-native';
 
 class Share extends Component {
+
   render() {
     return (
       <View style={{ borderRadius: 8, overflow: "hidden" }}>
@@ -11,7 +13,26 @@ class Share extends Component {
           size={25}
           color="#ffffff"
           style={{ margin: 5, alignItems: "flex-end" }}
-          onPress={() => console.log("Share")}
+          onPress={async () => {
+              try {
+                  console.log("Sharing");
+                  const result = await Sharing.share({
+                      message:
+                          'artree.com/post/54698547',
+                  });
+                  if (result.action === Sharing.sharedAction) {
+                      if (result.activityType) {
+                          // shared with activity type of result.activityType
+                      } else {
+                          // shared
+                      }
+                  } else if (result.action === Sharing.dismissedAction) {
+                      // dismissed
+                  }
+              } catch (error) {
+                  console.log("Sharing failed");
+              }
+          }}
         />
       </View>
     );
