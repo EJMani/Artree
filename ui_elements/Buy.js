@@ -2,11 +2,11 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { POSTS } from "../tempData/postData";
 
-export default function Bid({ post, currentPrice, onPress }) {
+export default function Buy({ post, currentPrice, onPress, disabled }) {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
       <View style={styles.button}>
-        <Text style={styles.title}>Bid: ${currentPrice}</Text>
+        <Text style={styles.title}>Buy: ${currentPrice}</Text>
       </View>
     </TouchableOpacity>
   );

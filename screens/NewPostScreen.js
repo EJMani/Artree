@@ -81,23 +81,52 @@ export default function NewPostScreen({navigation}) {
             return;
         }
 
-        try {
-            console.log(setEndDate());
-            await fetch("http://54.236.91.239:3000/NewPost",{
-              method: 'POST',
-              body: createFormData(image, 
-                {
-                    userID:userInstance,
-                    title:title,
-                    sale:sale,
-                    bidPrice:bidPrice,
-                    tags:tags,
-                    date:setEndDate(days)
-                })
-            }) 
-          } catch (error) {
-            console.log(error);
-          } 
+        switch (sale) {
+            case 1:
+                try {
+                    await fetch("http://54.236.91.239:3000/NewPostBid",{
+                      method: 'POST',
+                      body: createFormData(image, 
+                        {
+                            userID:userInstance,
+                            title:title,
+                            sale:sale,
+                            bidPrice:bidPrice,
+                            tags:tags,
+                            date:setEndDate(days)
+                        })
+                    }) 
+                  } catch (error) {
+                    console.log(error);
+                    return;
+                  } 
+                break;
+                case 2:
+                    if(parseFloat(bidPrice) === 0){
+                        return;
+                    }
+                    try {
+                        await fetch("http://54.236.91.239:3000/NewPostBuy",{
+                          method: 'POST',
+                          body: createFormData(image, 
+                            {
+                                userID:userInstance,
+                                title:title,
+                                sale:sale,
+                                bidPrice:bidPrice,
+                                tags:tags,
+                               
+                            })
+                        }) 
+                      } catch (error) {
+                        console.log(error);
+                        return;
+                      } 
+                    break;
+        
+            default:
+                break;
+        }
 
 
         setImage(null);

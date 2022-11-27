@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,  useContext } from "react";
 import {
   Image,
   View,
@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Modal,
-  TextInput,
+  TextInput
 } from "react-native";
 import { Divider } from "react-native-elements";
 import Upvote from "../ui_elements/Upvote";
@@ -14,20 +14,23 @@ import Downvote from "../ui_elements/Downvote";
 import Share from "../ui_elements/Share";
 import Save from "../ui_elements/Save";
 import Bid from "../ui_elements/Bid";
+import Buy from "./Buy";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CustomButton from "./CustomButton";
-import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
+import UserContext from "../context/UserContext";
 
 const Post = ({ post }) => {
   const navigation = useNavigation();
-
+  const {userInstance} = useContext(UserContext);
+  let [newBidPrice, setBidPrice] = useState(post.bidPrice);
   return (
     <View style={{ marginBottom: 14 }}>
       <Divider width={1000} orientation="vertical" />
       <PostHeader post={post} />
       <PostImage post={post} navigation={navigation} />
-      <PostFooter post={post} />
+      <PostFooter post={post} user={userInstance} price={{newBidPrice, setBidPrice}}/>
     </View>
   );
 };
@@ -77,7 +80,7 @@ const PostImage = ({ post, navigation }) => (
     <TouchableWithoutFeedback
       onPress={() =>
         navigation.navigate("PostScreen", {
-          post,
+          post
         })
       }
     >
@@ -89,7 +92,7 @@ const PostImage = ({ post, navigation }) => (
   </View>
 );
 
-const PostFooter = ({ post }) => {
+const PostFooter = ({ post, user, price }) => {
   const QueryClient = useQueryClient()
   const {isLoading, isRefetching, data, refetch, isError,isFetched} = useQuery({ 
     queryKey: ['bidInfo', post.artID], 
@@ -103,7 +106,8 @@ const PostFooter = ({ post }) => {
   })
 
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [ModalOpenBid, setModalOpenBid] = useState(false);
+  const [ModalOpenBuy, setModalOpenBuy] = useState(false);
   let [upvotes, setUpvotes] = useState(post.upvotes);
   function upvote() {
     setUpvotes(upvotes + 1);
@@ -111,7 +115,7 @@ const PostFooter = ({ post }) => {
   function downvote() {
     setUpvotes(upvotes - 1);
   }
-
+  let [disable, disableButton] = useState(false);
   //timer variables
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -140,15 +144,62 @@ const PostFooter = ({ post }) => {
         return () => clearInterval(interval);
   }, [deadline]);
 
-  function handleModal(){
+  useEffect(() => {
+    price.setBidPrice(post.bidPrice);
+  }, []);
+
+  function handleBidModal(){
     refetch();
-    setModalOpen(true);
+    setModalOpenBid(true);
+  }
+  function handleBuyModal(){
+    setModalOpenBuy(true);
+  }
+
+  async function handleBid(){
+    if(parseFloat(price.newBidPrice) > post.bidPrice){
+      try {
+        await fetch("http://54.236.91.239:3000/updateAuctionBid",{
+          headers:{
+            'Accept':'application/json',
+            'Content-Type': 'application/json'},
+          method: 'POST',
+          body: JSON.stringify({
+            newBidPrice: price.newBidPrice,
+            userID:user,
+            artID: post.artID
+          })
+        })
+      } catch (error) {
+        console.log(error);
+      } 
+      setModalOpenBid(false)
+    }
+  }
+
+  async function handleBuy(){
+    try {
+      await fetch("http://54.236.91.239:3000/buyNow",{
+        headers:{
+          'Accept':'application/json',
+          'Content-Type': 'application/json'},
+        method: 'POST',
+        body: JSON.stringify({
+          userID:user,
+          artID: post.artID
+        })
+      })
+    } catch (error) {
+      console.log(error);
+    } 
+      setModalOpenBuy(false);
+      disableButton(true);
   }
 
   return (
     <View>
       <View>
-        <Modal visible={modalOpen && (deadline !== null)} transparent={true} animationType={"slide"}>
+        <Modal visible={ModalOpenBid && (deadline !== null)} transparent={true} animationType={"slide"}>
           <View style={styles.modalBack}>
             <View style={styles.modal}>
               <Ionicons
@@ -156,7 +207,7 @@ const PostFooter = ({ post }) => {
                 size={35}
                 color="#000000"
                 style={{ margin: 15, alignItems: "flex-end" }}
-                onPress={() => setModalOpen(false)}
+                onPress={() => setModalOpenBid(false)}
               />
               <Text style={{ paddingLeft: 10, fontSize: 45 }}>
                 Current Bid: ${post.bidPrice}
@@ -178,15 +229,39 @@ const PostFooter = ({ post }) => {
                 <TextInput
                   keyboardType="numeric"
                   style={styles.input}
-                  //onChangeText={console.log'bid input'}
-                  //value={comment}
+                  onChangeText={price.setBidPrice}
+                  value={price.newBidPrice}
                   placeholder=""
                 />
               </View>
               <View style={{ paddingTop: 40, alignItems: "center" }}>
                 <CustomButton
                   title="Place Bid"
-                  onPress={() => setModalOpen(false)}
+                  onPress={handleBid}
+                />
+              </View>
+            </View>
+          </View>
+        </Modal>
+      </View>
+      <View>
+        <Modal visible={ModalOpenBuy} transparent={true} animationType={"slide"}>
+          <View style={styles.modalBack}>
+            <View style={styles.modal}>
+              <Ionicons
+                name="arrow-back-outline"
+                size={35}
+                color="#000000"
+                style={{ margin: 15, alignItems: "flex-end" }}
+                onPress={() => setModalOpenBuy(false)}
+              />
+              <Text style={{ paddingLeft: 10, fontSize: 45 }}>
+                Buy Now Price: ${post.bidPrice}
+              </Text>
+              <View style={{ paddingTop: 40, alignItems: "center" }}>
+                <CustomButton
+                  title="Buy Now"
+                  onPress={handleBuy}
                 />
               </View>
             </View>
@@ -209,7 +284,8 @@ const PostFooter = ({ post }) => {
         </View>
 
         <View>
-          {post.forSale === 1? <Bid post={post} onPress={handleModal}/> : <></>}
+          {post.forSale === 1? <Bid post={post} currentPrice={price.newBidPrice} onPress={handleBidModal}/> : <></>}
+          {post.forSale === 2? <Buy post={post} currentPrice={price.newBidPrice} onPress={handleBuyModal} disabled={disable}/> : <></>}
         </View>
         <View
           style={{
