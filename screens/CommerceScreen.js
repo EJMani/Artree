@@ -2,11 +2,12 @@ import {StatusBar} from 'expo-status-bar';
 import {Text, StyleSheet, View} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import BuyingButton from "../ui_elements/BuyingButton";
 
 function CommissionsScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#1f1e49" }}>
-            <Text>Feed!</Text>
+            <BuyingButton></BuyingButton>
         </View>
     );
 }
@@ -29,7 +30,7 @@ function MyTabs() {
             screenOptions={{
                 tabBarActiveTintColor: '#1FCEC6',
                 tabBarInactiveTintColor: '#fff',
-                tabBarLabelStyle: { fontSize: 16 , fontFamily: 'inter'},
+                tabBarLabelStyle: { fontSize: 20 , fontFamily: 'inter', textTransform: "capitalize"},
                 tabBarStyle: { backgroundColor: '#383CF4' },
             }}
         >
