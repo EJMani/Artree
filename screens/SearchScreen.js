@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Text, StyleSheet, Button, View } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { useQueryClient,useQuery } from "@tanstack/react-query";
+import BoxContainer from "../ui_elements/BoxContainer";
 
 
 export default function SearchScreen({ navigation }) {
@@ -51,9 +52,9 @@ export default function SearchScreen({ navigation }) {
         value={search} 
       />
       <View style={styles.Results}>
-        <Text style={{color: "white"}}>
-         {data !== undefined? data.map((post, key)=>(
-            <Text key={key}>{post.title} - </Text>
+        <Text style={{color: "white", fontSize: 18}}>
+         {data !== undefined? data.map((post, key)=>(           
+              <Text key={key}>{post.title}{"\n"}{"\n"}</Text>            
           )): <></>}
           </Text>
       </View>
@@ -72,7 +73,11 @@ const styles = StyleSheet.create({
   SearchBar:{
     width:'100%'
   },
-  Results:{
-    alignItems: "center",
-  }
+  Results:{    
+    flexDirection: 'row',
+    justifyContent: "space-around", 
+    alignItems: "center", 
+    color: "white"    
+  },
+
 });
