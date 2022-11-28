@@ -62,15 +62,17 @@ const PostHeader = ({ post }) => (
       </Text>
     </View>
 
-    <View style={{ flexDirection: "row", alignItems: "center", padding: 5 }}>
-      <Image
-        source={{ uri: post.userLink }} //source={require("../assets/adaptive-icon.png")}
-        style={styles.proPic}
-      />
-      <Text style={{ color: "white", marginLeft: 5, fontWeight: "700" }}>
-        {post.username}
-      </Text>
-    </View>
+    <TouchableWithoutFeedback onPress={() => console.log("profile")}>
+      <View style={{ flexDirection: "row", alignItems: "center", padding: 5 }}>
+        <Image
+          source={{ uri: post.userLink }} //source={require("../assets/adaptive-icon.png")}
+          style={styles.proPic}
+        />
+        <Text style={{ color: "white", marginLeft: 5, fontWeight: "700" }}>
+          {post.username}
+        </Text>
+      </View>
+    </TouchableWithoutFeedback>
   </View>
 );
 
