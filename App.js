@@ -7,7 +7,6 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import ProfileScreen from "./screens/ProfileScreen";
 import SearchScreen from "./screens/SearchScreen";
 import NewPostScreen from "./screens/NewPostScreen";
-import BuyingScreen from "./screens/BuyingScreen";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -16,6 +15,7 @@ import { ScrollProvider } from "./context/ScrollContext";
 import { HomeStack } from "./routes/HomeStack";
 import SortingPicker from "./ui_elements/SortingPicker";
 import SettingsButton from "./ui_elements/SettingsButton";
+import CommerceScreen from "./screens/CommerceScreen";
 
 const Tab = createBottomTabNavigator();
 const queryClient = new QueryClient();
@@ -112,7 +112,7 @@ export default function App() {
               />
               <Tab.Screen
                 name="Commerce"
-                component={BuyingScreen}
+                component={CommerceScreen}
                 options={{
                   headerTitle: "Buying & Selling",
                   headerTitleAlign: "center",

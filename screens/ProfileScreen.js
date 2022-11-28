@@ -9,6 +9,7 @@ import RequestCommission from "../ui_elements/RequestCommission";
 import CustomButton from "../ui_elements/CustomButton";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CheckBox from "../ui_elements/Checkbox";
+import RequestCommissionButton from "../ui_elements/RequestCommissionButton";
 
 export default function ProfileScreen({ navigation }) {
   const [ModalOpen, setModalOpen] = useState(false);
@@ -105,87 +106,77 @@ export default function ProfileScreen({ navigation }) {
           </View>
         </Modal>
       </View>
-      <BoxContainer style={styles.container1}>
-        <Image
-          source={{ uri: user.link }}
-          style={{ width: 100, height: 100, translateX: -50, borderRadius: 50 }}
-        />
-        <Text style={{ translateX: -35, fontSize: 24, color: "#FFFFFF" }}>
-          {user.username}
-        </Text>
-        <RequestCommission onPress={() => setModalOpen(true)} />
-      </BoxContainer>
-      <BoxContainer style={styles.container2}>
-        <Text
-          style={{
-            fontsize: 26,
-            color: "#FFFFFF",
-            translateX: -120,
-            translateY: -20,
-          }}
-        >
-          About Me:{" "}
-        </Text>
-        <Text
-          style={{
-            fontsize: 20,
-            color: "#FFFFFF",
-            translateX: -120,
-            translateY: -20,
-          }}
-        >
-          {user.aboutMe}
-        </Text>
-      </BoxContainer>
-      <BoxContainer style={styles.container3}>
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          {artArray.map((art) => (
-            <View key={art.artID} style={{ paddingTop: 15 }}>
-              <Text style={{ color: "#FFFFFF" }}>{art.title}</Text>
-              <Image
-                source={{ uri: art.link }}
-                style={{ width: 150, height: 150 }}
-              />
-            </View>
-          ))}
-        </ScrollView>
-      </BoxContainer>
+        <BoxContainer style = {styles.container1}>
+            <View style={{ borderRadius: 100, overflow: "hidden"}}><Image source={{ uri: user.link }} style={{ width: 95, height: 95, }}/></View>
+            <Text style ={{fontSize: 26, color: "#FFFFFF", fontFamily: "inter", marginLeft: -18,}}>{user.username}</Text>
+            <RequestCommission onPress={() => setModalOpen(true)}></RequestCommission>
+        </BoxContainer>
+        <BoxContainer style = {styles.container2}>
+            <Text style = {{fontSize: 23, color: "#FFFFFF", fontFamily: "inter" , alignSelf: "flex-start", paddingLeft: 13}}>About Me: </Text>
+            <Text style = {{fontSize: 18, color: "#FFFFFF", fontFamily: "inter", marginTop: -5,}}>{user.aboutMe}</Text>
+        </BoxContainer>
+        <BoxContainer style = {styles.container3}>
+            <ScrollView contentContainerStyle={styles.contentContainer}>
+                {artArray.map((art) =>(
+                    <View style={styles.pictures} key={art.artID}>
+                        <Image source={{ uri: art.link }} style={{ width: 150, height: 150 }}/>
+                    </View>
+                ))}
+            </ScrollView>
+        </BoxContainer>
 
       <StatusBar
         style="light" //this took me an hour to figure out :(
       />
     </View>
   );
+    useEffect(() => {
+        getUserInfo();
+        getUserPics();
+      }, []);
+    return (
+        <View style={styles.container}>
+
+
+            <StatusBar
+                style="light" //this took me an hour to figure out :(
+            />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "space-around",
-    backgroundColor: "#1f1e49",
-    alignItems: "center",
-  },
-  container1: {
-    height: 40,
-    width: 375,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingLeft: 20,
-  },
-  container2: {
-    height: 80,
-    width: 321,
-    backgroundColor: "#383CF4",
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  container3: {
-    height: 400,
-    width: 365,
-  },
-  contentContainer: {
-    paddingVertical: 20,
-  },
+    container: {
+        alignItems: "center",
+        backgroundColor: "#1f1e49",
+    },
+    container1 :{
+        height: 125,
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+
+    },
+    container2 :{
+        height: 80,
+        width: 321,
+        backgroundColor: '#383CF4',
+        borderRadius: 10
+    },
+    container3: {
+        width: "auto",
+        height: "69%",
+    },
+    contentContainer: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        paddingLeft: 27,
+     },
+    pictures:{
+        // alignContent: "stretch",
+        padding: 8,
+    },
   modalBack: {
     flex: 1,
     alignItems: "center",

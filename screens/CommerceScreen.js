@@ -3,10 +3,13 @@ import {Text, StyleSheet, View, Button} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import BuyingButton from "../ui_elements/BuyingButton";
-import { useQueryClient, useQuery,useQueries } from "@tanstack/react-query";
-import { useState, useContext, useEffect } from 'react';
+import { useQueryClient, useQuery, useQueries } from "@tanstack/react-query";
+import React, { useState, useContext, useEffect } from 'react';
 import UserContext from '../context/UserContext';
 import Loading from '../ui_elements/Loading';
+import Post from "../ui_elements/Post";
+import bidAgain from "../ui_elements/BidAgain";
+import Timer from '../ui_elements/Timer'
 
 function CommissionsScreen() {
     const {userInstance} = useContext(UserContext);
@@ -55,16 +58,22 @@ function CommissionsScreen() {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#1f1e49" }}>
-            <BuyingButton></BuyingButton>
-            {console.log(buyerCommisions.data)}
-            {console.log(sellerCommisions.data)}
+        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: "#1f1e49", }}>
+
+                {buyerCommisions.data?.map((com, index) => (
+                    <Text style={styles.text}>Commission {index + 1}{"\n\t\t\t\t"} artist: {com.seller} {"\n\t\t\t\t"} {com.progress} {"\n\t\t\t\t"} cost: ${com.commisionPrice}</Text>
+                ))}
+            <View></View>
+            {sellerCommisions.data?.map((com, index) => (
+                <Text style={styles.text}>Commission {index + 1}{"\n\t\t\t\t"} customer: {com.buyer} {"\n\t\t\t\t"} {com.progress} {"\n\t\t\t\t"} cost: ${com.commisionPrice}</Text>
+            ))}
         </View>
     );
 }
 
 function AuctionsScreen() {
     const {userInstance} = useContext(UserContext);
+    const QueryClient = useQueryClient();
     const auctionPast = useQuery({
         queryKey: ['auctionPast'],
         queryFn: async ()=>{
@@ -76,7 +85,9 @@ function AuctionsScreen() {
             });
             const data = res.json();
             return data;
-        }
+        },
+        refetchOnWindowFocus: true,
+        // enabled: false,
     })
 
     if (auctionPast.isLoading) {
@@ -92,6 +103,10 @@ function AuctionsScreen() {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#1f1e49", }}>
             <Text>Notifications!</Text>
             {console.log(auctionPast.data)}
+            {auctionPast.data?.map((auc, index) => (
+                    <Text style={styles.text}>Auction {index + 1}{"\n\t\t\t\t"} auctioneer: {auc.auctioneer} {"\n\t\t\t\t"}  Highest Bid: ${auc.currrentBid} {"\n\t\t\t\t"} Time Left: <Timer deadline={auc.endDate}/> {"\n\t\t\t\t"}
+                        {userInstance==auc.highestBidderID? <Text>You are winning</Text> : <bidAgain/>}</Text>
+                ))}
         </View>
     );
 }
@@ -143,4 +158,34 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#1f1e49",
     },
+    text: {
+        alignSelf: "flex-start",
+        paddingTop: 10,
+        paddingLeft: 15,
+        fontFamily: "inter",
+        color: '#fff',
+        textAlign: "justify",
+        fontSize: 25,
+    },
+    otherText: {
+        alignSelf: "flex-start",
+        translateY: -5,
+        paddingLeft: 21,
+        fontFamily: "inter",
+        color: '#1FCEC6',
+        textAlign: "justify",
+        fontSize: 24,
+    },
+    buySellButton: {
+        flex: 1,
+        alignSelf: "flex-end",
+        paddingRight: 10,
+        position: "absolute",
+        bottom: 10,
+    },
+    otherButtons: {
+        alignSelf: "flex-start",
+        paddingTop: 5,
+        paddingLeft: 45,
+    }
 });

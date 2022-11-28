@@ -13,12 +13,14 @@ export default function CustomButton({ onPress }) {
 
 const styles = StyleSheet.create({
   button: {
-    width: "30%",
-    height: 75,
-    borderRadius: 35,
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    backgroundColor: "#FF70FB",
+    width: 110,
+    height: 55,
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: "hidden",
+    padding: 5,
+    borderRadius: 25,
+    backgroundColor: '#FF70FB',
   },
   title: {
     fontWeight: "bold",
