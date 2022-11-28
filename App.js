@@ -71,7 +71,7 @@ export default function App() {
                     iconName = "search";
                   } else if (route.name === "NewPost") {
                     iconName = "add-circle";
-                  } else if (route.name === "Buying") {
+                  } else if (route.name === "Commerce") {
                     iconName = "pricetag";
                   } else if (route.name === "Profile") {
                     iconName = "person";
@@ -111,10 +111,10 @@ export default function App() {
                 }}
               />
               <Tab.Screen
-                name="Buying"
+                name="Commerce"
                 component={BuyingScreen}
                 options={{
-                  headerTitle: "Buying",
+                  headerTitle: "Buying & Selling",
                   headerTitleAlign: "center",
                 }}
                 />
