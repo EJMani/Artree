@@ -1,20 +1,20 @@
 import React, {Component} from "react";
 import { StyleSheet, View, Pressable, Text} from "react-native";
 
-class BidButton extends Component {
+class SubmitProduct extends Component {
 
     render() {
         return (
             <View style={{borderRadius: 8, overflow: 'hidden',}}>
                 <Pressable style={styles.button} >
-                    <Text style={styles.title}>Bid $5</Text>
+                    <Text style={styles.title}>Submit Product</Text>
                 </Pressable>
             </View>
         );
     }
 }
 
-export default BidButton
+export default SubmitProduct
 
 const styles = StyleSheet.create({
     title:{
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#ff70fb',
-        width: 125,
+        width: 180,
         height: 40,
     },
 })

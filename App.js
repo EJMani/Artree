@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import ProfileScreen from "./screens/ProfileScreen";
 import SearchScreen from "./screens/SearchScreen";
 import NewPostScreen from "./screens/NewPostScreen";
-import CommerceScreen from "./screens/CommerceScreen";
+import BuyingScreen from "./screens/BuyingScreen";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -71,7 +71,7 @@ export default function App() {
                     iconName = "search";
                   } else if (route.name === "NewPost") {
                     iconName = "add-circle";
-                  } else if (route.name === "Commerce") {
+                  } else if (route.name === "Buying") {
                     iconName = "pricetag";
                   } else if (route.name === "Profile") {
                     iconName = "person";
@@ -111,13 +111,13 @@ export default function App() {
                 }}
               />
               <Tab.Screen
-                name="Commerce"
-                component={CommerceScreen}
+                name="Buying"
+                component={BuyingScreen}
                 options={{
                   headerTitle: "Buying",
                   headerTitleAlign: "center",
                 }}
-              />
+                />
               <Tab.Screen
                 name="Profile"
                 component={ProfileScreen}

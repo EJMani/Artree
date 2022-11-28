@@ -1,12 +1,13 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React, { Component } from "react";
+import {NavigationActions as navigation} from "react-navigation";
 
 class SellingButton extends Component {
     render() {
         return (
             <View style={styles.screen}>
                 <TouchableOpacity
-                    onPress={() => console.log("Selling")}
+                    onPress={() => navigation.navigate('Details')}
                     style={styles.roundButton}>
                     <Text style={{fontSize: 20, fontFamily: 'inter'}}>Selling</Text>
                 </TouchableOpacity>
