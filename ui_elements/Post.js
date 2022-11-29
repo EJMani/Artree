@@ -247,7 +247,12 @@ const PostFooter = ({ post, user, price }) => {
                 />
               </View>
               <View style={{ paddingTop: 40, alignItems: "center" }}>
-                <CustomButton title="Place Bid" onPress={handleBid} />
+                <CustomButton
+                  title="Place Bid"
+                  onPress={() => {
+                    handleBid, setModalOpenBid(false);
+                  }}
+                />
               </View>
             </View>
           </View>

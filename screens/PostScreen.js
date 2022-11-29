@@ -131,29 +131,47 @@ const Comments = ({ post, userInstance, queryClient }) => {
             placeholder="add a comment..."
           />
         </View> */}
-          <View>
-            <Text style={{ color: "white" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingTop: 10,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                paddingTop: 10,
+              }}
+            >
               <Image
                 source={{ uri: comment.link }} //source={require("../assets/adaptive-icon.png")}
                 style={{ height: 40, width: 40, borderRadius: 20 }}
               />
-              {/* <Text style={{ fontWeight: "600" }}>{comment.userID}</Text> */}
-              {comment.comm}
-            </Text>
-            <ReportButton />
-            {userInstance === comment.userID ? (
-              <Button
-                title="delete"
-                onPress={() => {
-                  mutation.mutate({
-                    commentID: comment.commentID,
-                  });
-                }}
-              ></Button>
-            ) : (
-              <></>
-            )}
+              <Text style={{ color: "white" }}>
+                {/* <Text style={{ fontWeight: "600" }}>{comment.userID}</Text> */}
+                {comment.comm}
+              </Text>
+
+              {userInstance === comment.userID ? (
+                <Button
+                  title="delete"
+                  style={{ alignItems: "flex-end" }}
+                  onPress={() => {
+                    mutation.mutate({
+                      commentID: comment.commentID,
+                    });
+                  }}
+                ></Button>
+              ) : (
+                <></>
+              )}
+            </View>
           </View>
+          <ReportButton />
         </View>
       ))}
     </>
