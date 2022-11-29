@@ -151,15 +151,15 @@ const Comments = ({ post, userInstance, queryClient }) => {
                 source={{ uri: comment.link }} //source={require("../assets/adaptive-icon.png")}
                 style={{ height: 40, width: 40, borderRadius: 20 }}
               />
-              <Text style={{ color: "white" }}>
+              <Text style={{ color: "white", fontSize: 15 }}>
                 {/* <Text style={{ fontWeight: "600" }}>{comment.userID}</Text> */}
                 {comment.comm}
               </Text>
-
+            </View>
+            <View style={{ paddingRight: 10 }}>
               {userInstance === comment.userID ? (
                 <Button
                   title="delete"
-                  style={{ alignItems: "flex-end" }}
                   onPress={() => {
                     mutation.mutate({
                       commentID: comment.commentID,
