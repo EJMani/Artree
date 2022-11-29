@@ -8,8 +8,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import UserContext from '../context/UserContext';
 import Loading from '../ui_elements/Loading';
 import Post from "../ui_elements/Post";
-import bidAgain from "../ui_elements/BidAgain";
+import BidAgain from "../ui_elements/BidAgain";
 import Timer from '../ui_elements/Timer'
+import CustomButton from '../ui_elements/CustomButton';
 
 function CommissionsScreen() {
     const {userInstance} = useContext(UserContext);
@@ -61,11 +62,11 @@ function CommissionsScreen() {
         <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center', backgroundColor: "#1f1e49", }}>
 
                 {buyerCommisions.data?.map((com, index) => (
-                    <Text style={styles.text}>Commission {index + 1}{"\n\t\t\t\t"} artist: {com.seller} {"\n\t\t\t\t"} {com.progress} {"\n\t\t\t\t"} cost: ${com.commisionPrice}</Text>
+                    <Text key={index} style={styles.text}>You Commissioned #{index + 1}{"\n\t\t\t\t"} Artist: {com.seller} {"\n\t\t\t\t"} {com.progress} {"\n\t\t\t\t"} cost: ${com.commisionPrice}</Text>
                 ))}
             <View></View>
             {sellerCommisions.data?.map((com, index) => (
-                <Text style={styles.text}>Commission {index + 1}{"\n\t\t\t\t"} customer: {com.buyer} {"\n\t\t\t\t"} {com.progress} {"\n\t\t\t\t"} cost: ${com.commisionPrice}</Text>
+                <Text key={index} style={styles.text}>Your Job #{index + 1}{"\n\t\t\t\t"} Customer: {com.buyer} {"\n\t\t\t\t"} {com.progress} {"\n\t\t\t\t"} cost: ${com.commisionPrice}{"\n\t\t\t\t"} <CustomButton title={"Complete"}/></Text>
             ))}
         </View>
     );
@@ -101,11 +102,10 @@ function AuctionsScreen() {
     }
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#1f1e49", }}>
-            <Text>Notifications!</Text>
             {console.log(auctionPast.data)}
             {auctionPast.data?.map((auc, index) => (
-                    <Text style={styles.text}>Auction {index + 1}{"\n\t\t\t\t"} auctioneer: {auc.auctioneer} {"\n\t\t\t\t"}  Highest Bid: ${auc.currrentBid} {"\n\t\t\t\t"} Time Left: <Timer deadline={auc.endDate}/> {"\n\t\t\t\t"}
-                        {userInstance==auc.highestBidderID? <Text>You are winning</Text> : <bidAgain/>}</Text>
+                    <Text key={index} style={styles.text}>Auction Bid {index + 1}{"\n\t\t\t\t"} auctioneer: {auc.auctioneer} {"\n\t\t\t\t"}  Highest Bid: ${auc.currrentBid} {"\n\t\t\t\t"} Time Left: <Timer deadline={auc.endDate}/> {"\n\t\t\t\t"}
+                        {userInstance==auc.highestBidderID? <Text>You are winning</Text> : <BidAgain/>}</Text>
                 ))}
         </View>
     );

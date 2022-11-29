@@ -21,10 +21,11 @@ import * as ImagePicker from "expo-image-picker";
 import { useState, useContext, useEffect } from "react";
 import UserContext from "../context/UserContext";
 import { height } from "@mui/system";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function NewPostScreen({ navigation }) {
   const { userInstance } = useContext(UserContext);
-
+  const QueryClient = useQueryClient()
   //New Post variables
   let [image, setImage] = useState(null);
   let [bidPrice, setPrice] = useState(0);
@@ -41,7 +42,7 @@ export default function NewPostScreen({ navigation }) {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1,1],
       quality: 1,
     });
 
@@ -134,6 +135,7 @@ export default function NewPostScreen({ navigation }) {
         break;
     }
 
+    QueryClient.refetchQueries(["posts"])
     setImage(null);
     setPrice(0);
     setTitle("");
@@ -145,7 +147,7 @@ export default function NewPostScreen({ navigation }) {
   useEffect(() => {
     if (sale === 1) {
       showDateInput(
-        <>
+        <View style={{alignItems:'center'}}>
           <Text style={{ color: "#fff" }}>Auction Time(number of days):</Text>
           <TextInput
             keyboardType="numeric"
@@ -159,7 +161,7 @@ export default function NewPostScreen({ navigation }) {
               translateX: -20,
             }}
           />
-        </>
+        </View>
       );
     } else {
       showDateInput(<></>);
@@ -183,7 +185,7 @@ export default function NewPostScreen({ navigation }) {
         ) : (
           <Image
             source={{ uri: image?.uri }}
-            style={{ width: "100%", height: 450 }}
+            style={{ width: '120%', height: '120%' }}
           />
         )}
       </BoxContainer>
@@ -257,6 +259,7 @@ const styles = StyleSheet.create({
   container2: {
     height: 250,
     width: 375,
+    alignItems:'center',
   },
   container3: {
     backgroundColor: "#383CF4",
