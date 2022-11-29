@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Modal,
   TextInput,
+  SafeAreaView,
 } from "react-native";
 import { Divider } from "react-native-elements";
 import Upvote from "../ui_elements/Upvote";
@@ -212,7 +213,7 @@ const PostFooter = ({ post, user, price }) => {
           transparent={true}
           animationType={"slide"}
         >
-          <View style={styles.modalBack}>
+          <SafeAreaView style={styles.modalBack}>
             <View style={styles.modal}>
               <Ionicons
                 name="arrow-back-outline"
@@ -255,7 +256,7 @@ const PostFooter = ({ post, user, price }) => {
                 />
               </View>
             </View>
-          </View>
+          </SafeAreaView>
         </Modal>
       </View>
       <View>
