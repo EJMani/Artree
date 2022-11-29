@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         backgroundColor: "#1f1e49",
+        height: "100%"
     },
     container1 :{
         height: 125,
