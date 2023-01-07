@@ -1,6 +1,6 @@
 # artree
 ![211121013-b8049a68-577e-43e2-ba4d-84a79feca1bd](https://user-images.githubusercontent.com/25084859/211121264-3e187b76-ad3c-4d1b-a71f-b75489d8c798.png)
-Artree is a social media web application
+Artree is a social media application
 that focuses on the discovery of new art/artists and
 curates posts through a Reddit-like up-vote system
 to determine what art you will see.
