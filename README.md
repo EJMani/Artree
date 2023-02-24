@@ -32,4 +32,4 @@ a clutter-free, endless, and fluid environment.
 | --- | --- | --- | --- | --- | 
 | ![image](https://user-images.githubusercontent.com/25084859/211138951-8abcd64f-f873-4cd1-b547-76775be80fc1.png) | ![image](https://user-images.githubusercontent.com/25084859/211135651-64e0530a-c4ce-43b2-98fb-285345f4da45.png) | ![image](https://user-images.githubusercontent.com/25084859/211138701-83257000-1f10-4f1a-83ad-26f6fa4fbace.png) | ![image](https://user-images.githubusercontent.com/25084859/211138761-5c2806a0-37f0-4b73-9e94-d6634aec83d2.png) | ![image](https://user-images.githubusercontent.com/25084859/211138769-bedab2b4-8e82-42b7-a9ab-005bdd04afd1.png) |
 | https://github.com/iamjohnmeyers | https://github.com/drobi92 | https://github.com/EJMani | https://github.com/Nick-LeBlanc | https://github.com/awal134 |
-| john@johnmeye.rs | drobi92@lsu.edu | emanie1@lsu.edu | nickleblanc811@gmail.com | awal134@lsu.edu |
+| dev@johnmeye.rs | drobi92@lsu.edu | emanie1@lsu.edu | nickleblanc811@gmail.com | awal134@lsu.edu |
